@@ -42,7 +42,6 @@ export const HomePage = () => {
         {animes
           ? animes?.data.map(
               ({
-                rank,
                 mal_id,
                 season,
                 images,
