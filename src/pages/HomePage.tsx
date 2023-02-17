@@ -68,7 +68,7 @@ export const HomePage = () => {
                       {removeWrittenByMALRewrite(synopsis)}
                     </p>
                     <p>
-                      {episodes} episodes aired on{" "}
+                      {episodes} episodes aired on
                       {removeExtraDate(aired.string)}
                     </p>
                   </div>
