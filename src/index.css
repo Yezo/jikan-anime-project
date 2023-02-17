@@ -1,0 +1,9 @@
+@tailwind base;
+@tailwind components;
+@tailwind utilities;
+
+/* Prevents scrollbar from pushing content to the left */
+html {
+  width: 100vw;
+  overflow-x: hidden;
+}
