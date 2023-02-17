@@ -47,12 +47,20 @@ export const HomePage = () => {
 
   return (
     <div className="mx-auto min-h-screen max-w-[95rem] bg-primary px-10 font-primary text-text">
-      <div className="grid grid-cols-2 gap-8">
+      <div className="grid grid-cols-3 gap-8">
         {animes
           ? animes?.data.map(
-              ({ mal_id, images, title, episodes, aired, synopsis }) => (
+              ({
+                mal_id,
+                images,
+                title,
+                episodes,
+                aired,
+                synopsis,
+                genres,
+              }) => (
                 <div
-                  className="flex flex-col items-center  rounded-sm bg-white md:max-h-[18rem] md:max-w-lg md:flex-row"
+                  className="flex flex-col items-center rounded-sm bg-white md:max-h-[18rem]  md:min-h-[18rem] md:max-w-lg md:flex-row"
                   key={mal_id}
                 >
                   <img
@@ -60,20 +68,34 @@ export const HomePage = () => {
                     src={images.webp.large_image_url}
                     alt={title}
                   />
-                  <div className="flex h-full flex-col gap-4 p-4 leading-normal">
-                    <div className="flex flex-col">
-                      {" "}
-                      <h2 className="mb-2 text-2xl font-semibold tracking-tighter text-primary">
-                        {title}
-                      </h2>
-                      <p className="text-xs font-semibold">
-                        {episodes} episodes aired on{" "}
-                        {removeExtraDate(aired.string)}
+                  <div className="flex h-full flex-col">
+                    <div className="flex h-full flex-col justify-between gap-4 p-4  leading-normal">
+                      <div className="flex flex-col">
+                        <h2 className="text-xl font-semibold tracking-tighter text-[#393831]">
+                          {title}
+                        </h2>
+                        <p className="text-xs font-semibold">
+                          {episodes} episodes aired on{" "}
+                          {removeExtraDate(aired.string)}
+                        </p>
+                      </div>
+                      <p className="max-h-[10rem] max-w-full overflow-y-auto overscroll-contain  text-[0.7rem] leading-5  text-text">
+                        {truncateString(
+                          removeWrittenByMALRewrite(synopsis),
+                          150
+                        )}
                       </p>
                     </div>
-                    <p className="text-gray-700 mb-3 max-h-[10rem] max-w-full overflow-y-auto overscroll-contain truncate whitespace-normal text-xs leading-5">
-                      {truncateString(removeWrittenByMALRewrite(synopsis), 225)}
-                    </p>
+                    <footer className="flex h-[3.5rem] max-h-[3.5rem] w-full flex-wrap items-center gap-1  bg-gray px-2">
+                      {genres.map((item) => (
+                        <div
+                          className="flex max-h-[2rem] max-w-fit items-center justify-center rounded-2xl bg-[#3480EA] px-2 py-1 pb-1.5 text-[0.65rem] font-semibold text-white"
+                          key={item.mal_id}
+                        >
+                          {item.name}
+                        </div>
+                      ))}
+                    </footer>
                   </div>
                 </div>
               )
