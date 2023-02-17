@@ -41,15 +41,7 @@ export const HomePage = () => {
       <div className="grid grid-cols-3 gap-8">
         {animes
           ? animes?.data.map(
-              ({
-                mal_id,
-                season,
-                images,
-                title,
-                episodes,
-                aired,
-                synopsis,
-              }) => (
+              ({ mal_id, images, title, episodes, aired, synopsis }) => (
                 <div
                   className="flex flex-col items-center overflow-y-auto  rounded-sm bg-white md:max-h-[18rem] md:max-w-xl md:flex-row"
                   key={mal_id}
