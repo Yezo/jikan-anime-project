@@ -1,21 +1,25 @@
 import React, { useState, useEffect } from "react";
 import AnimeCard from "../components/AnimeCard";
+import Pagination from "../components/Pagination";
 import { RootObject } from "../interfaces/interfaceTop100Anime";
 
 export const HomePage = () => {
   //States
   const [animes, setAnimes] = useState<RootObject | null>(null);
   const [pagination, setPagination] = useState<number>(1);
+  const [api, setAPI] = useState<string>(
+    `https://api.jikan.moe/v4/top/anime?page=${pagination}&limit=21`
+  );
 
-  //Constants
-  const API_URL = `https://api.jikan.moe/v4/top/anime?page=${pagination}&limit=21`;
-
-  //Fetch data
   useEffect(() => {
+    //Fetch data
     const controller = new AbortController();
     const fetchAPI = async () => {
       try {
-        const data = await fetch(API_URL);
+        setAPI(
+          `https://api.jikan.moe/v4/top/anime?page=${pagination}&limit=21`
+        );
+        const data = await fetch(api);
         const resp = await data.json();
         setAnimes(resp);
       } catch (error) {
@@ -26,7 +30,7 @@ export const HomePage = () => {
     return () => {
       controller.abort();
     };
-  }, []);
+  }, [pagination, setPagination, api, setAPI]);
 
   //Helper functions
   function removeExtraDate(url: string) {
@@ -81,6 +85,13 @@ export const HomePage = () => {
               )
             )
           : null}
+      </div>
+      <div className="mt-4 flex items-center justify-center">
+        <Pagination
+          setPagination={setPagination}
+          setAPI={setAPI}
+          pagination={pagination}
+        />
       </div>
     </div>
   );

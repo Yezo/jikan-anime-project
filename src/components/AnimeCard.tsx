@@ -1,7 +1,7 @@
-import React, { useEffect } from "react";
+import React from "react";
 import { Genre, Aired } from "../interfaces/interfaceTop100Anime";
 import { Link } from "react-router-dom";
-import { Navigate, useNavigate, redirect } from "react-router-dom";
+import { useNavigate } from "react-router-dom";
 
 type Props = {
   id: number;
