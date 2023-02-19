@@ -1,6 +1,6 @@
 import React, { useState, useEffect } from "react";
 import AnimeCard from "../components/AnimeCard";
-import { RootObject, JikanAPI } from "../interfaces/interfaceJikanAPI";
+import { RootObject } from "../interfaces/interfaceTop100Anime";
 
 export const HomePage = () => {
   //States
@@ -8,7 +8,7 @@ export const HomePage = () => {
   const [pagination, setPagination] = useState<number>(1);
 
   //Constants
-  const API_URL = `https://api.jikan.moe/v4/top/anime?page=${pagination}`;
+  const API_URL = `https://api.jikan.moe/v4/top/anime?page=${pagination}&limit=21`;
 
   //Fetch data
   useEffect(() => {
@@ -47,7 +47,7 @@ export const HomePage = () => {
   }
 
   return (
-    <div className="mx-auto min-h-screen max-w-[95rem] bg-light px-10 pt-10 font-primary text-text">
+    <div className="mx-auto min-h-screen max-w-[95rem] bg-light p-10 font-primary text-text">
       <div className="grid grid-cols-1 gap-8 lg:grid-cols-2 2xl:grid-cols-3">
         {animes
           ? animes?.data.map(
@@ -65,6 +65,7 @@ export const HomePage = () => {
                   key={mal_id}
                 >
                   <AnimeCard
+                    id={mal_id}
                     imageURL={images.webp.large_image_url}
                     title={title}
                     episodes={episodes}
@@ -75,7 +76,6 @@ export const HomePage = () => {
                     removeExtraDate={removeExtraDate}
                     removeWrittenByMALRewrite={removeWrittenByMALRewrite}
                     truncateString={truncateString}
-                    id={mal_id}
                   ></AnimeCard>
                 </div>
               )
