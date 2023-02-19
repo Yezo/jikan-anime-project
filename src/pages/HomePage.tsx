@@ -1,4 +1,5 @@
 import React, { useState, useEffect } from "react";
+import AnimeCard from "../components/AnimeCard";
 import { RootObject, JikanAPI } from "../interfaces/interfaceJikanAPI";
 
 export const HomePage = () => {
@@ -46,8 +47,8 @@ export const HomePage = () => {
   }
 
   return (
-    <div className="mx-auto min-h-screen max-w-[95rem] bg-primary px-10 font-primary text-text">
-      <div className="grid grid-cols-3 gap-8">
+    <div className="mx-auto min-h-screen max-w-[95rem] bg-light px-10 pt-10 font-primary text-text">
+      <div className="grid grid-cols-1 gap-8 lg:grid-cols-2 2xl:grid-cols-3">
         {animes
           ? animes?.data.map(
               ({
@@ -60,43 +61,22 @@ export const HomePage = () => {
                 genres,
               }) => (
                 <div
-                  className="flex flex-col items-center rounded-sm bg-white md:max-h-[18rem]  md:min-h-[18rem] md:max-w-lg md:flex-row"
+                  className="flex flex-col items-center justify-center rounded-md"
                   key={mal_id}
                 >
-                  <img
-                    className="h-full w-[185px] rounded-l-sm object-cover object-center"
-                    src={images.webp.large_image_url}
-                    alt={title}
-                  />
-                  <div className="flex h-full flex-col">
-                    <div className="flex h-full flex-col justify-between gap-4 p-4  leading-normal">
-                      <div className="flex flex-col">
-                        <h2 className="text-xl font-semibold tracking-tighter text-[#393831]">
-                          {title}
-                        </h2>
-                        <p className="text-xs font-semibold">
-                          {episodes} episodes aired on{" "}
-                          {removeExtraDate(aired.string)}
-                        </p>
-                      </div>
-                      <p className="max-h-[10rem] max-w-full overflow-y-auto overscroll-contain  text-[0.7rem] leading-5  text-text">
-                        {truncateString(
-                          removeWrittenByMALRewrite(synopsis),
-                          150
-                        )}
-                      </p>
-                    </div>
-                    <footer className="flex h-[3.5rem] max-h-[3.5rem] w-full flex-wrap items-center gap-1  bg-gray px-2">
-                      {genres.map((item) => (
-                        <div
-                          className="flex max-h-[2rem] max-w-fit items-center justify-center rounded-2xl bg-[#3480EA] px-2 py-1 pb-1.5 text-[0.65rem] font-semibold text-white"
-                          key={item.mal_id}
-                        >
-                          {item.name}
-                        </div>
-                      ))}
-                    </footer>
-                  </div>
+                  <AnimeCard
+                    imageURL={images.webp.large_image_url}
+                    title={title}
+                    episodes={episodes}
+                    aired={aired}
+                    synopsis={synopsis}
+                    synopsisNum={150}
+                    genres={genres}
+                    removeExtraDate={removeExtraDate}
+                    removeWrittenByMALRewrite={removeWrittenByMALRewrite}
+                    truncateString={truncateString}
+                    id={mal_id}
+                  ></AnimeCard>
                 </div>
               )
             )
