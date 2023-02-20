@@ -1,18 +1,18 @@
 import React, { useState, useEffect } from "react";
-import AnimeCard from "../components/AnimeCard";
-import Pagination from "../components/Pagination";
+import { AnimeCard } from "../components/AnimeCard";
 import { RootObject } from "../interfaces/interfaceTop100Anime";
 
 export const HomePage = () => {
   //States
   const [animes, setAnimes] = useState<RootObject | null>(null);
-  const [pagination, setPagination] = useState<number>(1);
+  const [pagination, setPagination] = useState<string>("1");
   const [api, setAPI] = useState<string>(
-    `https://api.jikan.moe/v4/top/anime?page=${pagination}&limit=21`
+    `https://api.jikan.moe/v4/top/anime?page=1&limit=21`
   );
+  const pages = ["1", "2", "3", "4", "5"];
 
   useEffect(() => {
-    //Fetch data
+    window.scrollTo(0, 0);
     const controller = new AbortController();
     const fetchAPI = async () => {
       try {
@@ -30,7 +30,7 @@ export const HomePage = () => {
     return () => {
       controller.abort();
     };
-  }, [pagination, setPagination, api, setAPI]);
+  }, [pagination, api]);
 
   //Helper functions
   function removeExtraDate(url: string) {
@@ -86,12 +86,25 @@ export const HomePage = () => {
             )
           : null}
       </div>
-      <div className="mt-4 flex items-center justify-center">
-        <Pagination
-          setPagination={setPagination}
-          setAPI={setAPI}
-          pagination={pagination}
-        />
+
+      <div className="mt-4 flex flex-col items-center justify-center">
+        Page
+        <ul className="flex gap-4">
+          {pages.map((item) => (
+            <li
+              className={`flex cursor-pointer gap-4 hover:font-bold ${
+                item === pagination ? "font-bold" : null
+              }  `}
+              key={item}
+              onClick={(e: React.MouseEvent<HTMLElement>) =>
+                // eslint-disable-next-line @typescript-eslint/no-explicit-any
+                setPagination(e.currentTarget.textContent as any)
+              }
+            >
+              {item}
+            </li>
+          ))}
+        </ul>
       </div>
     </div>
   );

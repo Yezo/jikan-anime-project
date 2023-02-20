@@ -17,7 +17,7 @@ type Props = {
   truncateString: (url: string, num: number) => string;
 };
 
-const AnimeCard = ({
+export const AnimeCard = ({
   id,
   imageURL,
   title,
@@ -68,7 +68,7 @@ const AnimeCard = ({
         </div>
         {/* Footer */}
         <footer className="flex h-[3.5rem] max-h-[3.5rem] w-full flex-wrap items-center gap-1  rounded-br-md bg-gray pl-3">
-          {genres.map((item) => (
+          {genres.slice(0, 3).map((item) => (
             <div
               className="flex max-h-[2rem] max-w-fit items-center justify-center rounded-2xl bg-[#3480EA] px-2 py-1 pb-1.5 text-[0.65rem] font-semibold text-white shadow-md"
               key={item.mal_id}
@@ -81,5 +81,3 @@ const AnimeCard = ({
     </div>
   );
 };
-
-export default AnimeCard;
