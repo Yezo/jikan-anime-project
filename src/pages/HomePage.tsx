@@ -53,7 +53,7 @@ export const HomePage = () => {
   return (
     <div className="mx-auto min-h-screen max-w-[95rem] bg-light p-10 font-primary text-text">
       <div className="grid grid-cols-1 gap-8 lg:grid-cols-2 2xl:grid-cols-3">
-        {animes
+        {animes && animes.data
           ? animes?.data.map(
               ({
                 mal_id,
