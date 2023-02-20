@@ -1,10 +1,12 @@
 import { useState, useEffect } from "react";
 import { Link, useParams } from "react-router-dom";
-import CharacterCard from "../components/IndividualAnime/CharacterCard";
+import { CharacterCard } from "../components/IndividualAnime/CharacterCard";
 import { RootObject } from "../interfaces/interfaceSingularAnime";
 import { Datum, gObject } from "../interfaces/interfaceAnimeCharacters";
 import { AnimeDetail } from "../components/IndividualAnime/AnimeDetail";
+
 export const IndividualAnimePage = () => {
+  //States
   const { animeId } = useParams();
   const [isLoading, setIsLoading] = useState(true);
   const [anime, setAnime] = useState<RootObject | null>(null);
@@ -78,7 +80,7 @@ export const IndividualAnimePage = () => {
             </div>
             <div className="flex flex-col p-4">
               <h3 className="font-bold">Description</h3>
-              <p className="text-sm">
+              <p className="text-[0.85rem] text-[#d3d3d3]">
                 {removeWrittenByMALRewrite(anime.data.synopsis)}
               </p>
             </div>
@@ -88,11 +90,13 @@ export const IndividualAnimePage = () => {
                   <span>{anime.data.type}</span>
                 </AnimeDetail>
               )}
+
               {anime.data.status && (
                 <AnimeDetail title="Status">
                   <span>{anime.data.status}</span>
                 </AnimeDetail>
               )}
+
               {anime.data.episodes && (
                 <AnimeDetail title="Episodes">
                   <span>{anime.data.episodes}</span>
@@ -110,6 +114,7 @@ export const IndividualAnimePage = () => {
                   <span>{String(anime.data.aired.from).slice(0, 10)}</span>
                 </AnimeDetail>
               )}
+
               {anime.data.season && anime.data.year && (
                 <AnimeDetail title="Season">
                   <span className="capitalize">
@@ -117,31 +122,37 @@ export const IndividualAnimePage = () => {
                   </span>
                 </AnimeDetail>
               )}
+
               {anime.data.aired.to && (
                 <AnimeDetail title="End Date">
                   <span>{String(anime.data.aired.to).slice(0, 10)}</span>
                 </AnimeDetail>
               )}
+
               {anime.data.score && (
                 <AnimeDetail title="Score">
                   <span>{anime.data.score}</span>
                 </AnimeDetail>
               )}
+
               {anime.data.scored_by && (
                 <AnimeDetail title="Scored by">
                   <span>{formatNums.format(anime.data.scored_by)} users</span>
                 </AnimeDetail>
               )}
+
               {anime.data.members && (
                 <AnimeDetail title="Members">
                   <span>{formatNums.format(anime.data.members)}</span>
                 </AnimeDetail>
               )}
+
               {anime.data.favorites && (
                 <AnimeDetail title="Favorites">
                   <span>{formatNums.format(anime.data.favorites)}</span>
                 </AnimeDetail>
               )}
+
               {anime.data.studios && (
                 <AnimeDetail title="Studio">
                   {anime.data.studios.map((item) => (
@@ -149,6 +160,7 @@ export const IndividualAnimePage = () => {
                   ))}
                 </AnimeDetail>
               )}
+
               {anime.data.demographics && (
                 <AnimeDetail title="Demographic">
                   {anime.data.demographics.map((item) => (
@@ -162,16 +174,19 @@ export const IndividualAnimePage = () => {
                   <span>{anime.data.title}</span>
                 </AnimeDetail>
               )}
+
               {anime.data.title_english && (
                 <AnimeDetail title="English">
                   <span>{anime.data.title_english}</span>
                 </AnimeDetail>
               )}
+
               {anime.data.title_japanese && (
                 <AnimeDetail title="Japanese">
                   <span>{anime.data.title_japanese}</span>
                 </AnimeDetail>
               )}
+
               {anime.data.producers && (
                 <AnimeDetail title="Producers">
                   {anime.data.producers.map((item) => (
@@ -179,6 +194,7 @@ export const IndividualAnimePage = () => {
                   ))}
                 </AnimeDetail>
               )}
+
               {anime.data.genres && (
                 <AnimeDetail title="Genres">
                   {anime.data.genres.map((item) => (

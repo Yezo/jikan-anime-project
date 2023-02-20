@@ -1,5 +1,3 @@
-import { Datum, gObject } from "../../interfaces/interfaceAnimeCharacters";
-
 type Props = {
   characterName: string;
   characterImage?: string;
@@ -8,7 +6,7 @@ type Props = {
   voiceActorLanguage?: string;
   voiceActorName?: string;
 };
-const CharacterCard = ({
+export const CharacterCard = ({
   characterName,
   characterImage,
   characterRole,
@@ -51,5 +49,3 @@ const CharacterCard = ({
     </div>
   );
 };
-
-export default CharacterCard;
