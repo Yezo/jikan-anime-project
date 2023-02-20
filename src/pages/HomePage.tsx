@@ -70,7 +70,7 @@ export const HomePage = () => {
                 >
                   <AnimeCard
                     id={mal_id}
-                    imageURL={images.webp.large_image_url}
+                    imageURL={images.jpg.large_image_url}
                     title={title}
                     episodes={episodes}
                     aired={aired}
