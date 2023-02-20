@@ -1,4 +1,4 @@
-import React, { useState, useEffect } from "react";
+import { useState, useEffect } from "react";
 import { AnimeCard } from "../components/AnimeCard";
 import { RootObject } from "../interfaces/interfaceTop100Anime";
 

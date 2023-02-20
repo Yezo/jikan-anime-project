@@ -1,4 +1,3 @@
-import React from "react";
 import { Genre, Aired } from "../interfaces/interfaceTop100Anime";
 import { Link } from "react-router-dom";
 import { useNavigate } from "react-router-dom";
