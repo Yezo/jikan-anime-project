@@ -6,20 +6,16 @@ export const HomePage = () => {
   //States
   const [animes, setAnimes] = useState<RootObject | null>(null);
   const [pagination, setPagination] = useState<string>("1");
-  const [api, setAPI] = useState<string>(
-    `https://api.jikan.moe/v4/top/anime?page=1&limit=21`
-  );
+
   const pages = ["1", "2", "3", "4", "5"];
+  const url = `https://api.jikan.moe/v4/top/anime?page=${pagination}&limit=21`;
 
   useEffect(() => {
     window.scrollTo(0, 0);
     const controller = new AbortController();
     const fetchAPI = async () => {
       try {
-        setAPI(
-          `https://api.jikan.moe/v4/top/anime?page=${pagination}&limit=21`
-        );
-        const data = await fetch(api);
+        const data = await fetch(url);
         const resp = await data.json();
         setAnimes(resp);
       } catch (error) {
@@ -30,7 +26,7 @@ export const HomePage = () => {
     return () => {
       controller.abort();
     };
-  }, [pagination, api]);
+  }, [pagination]);
 
   //Helper functions
   function removeExtraDate(url: string) {
