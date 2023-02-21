@@ -4,7 +4,7 @@ import { IndividualAnimePage } from "./pages/IndividualAnimePage";
 
 function App() {
   return (
-    <div className="min-w-screen min-h-screen bg-primary">
+    <div className="min-w-screen min-h-screen bg-[#131A20]">
       <Routes>
         <Route path="/" element={<HomePage />}></Route>
         <Route path="/anime/:animeId" element={<IndividualAnimePage />} />

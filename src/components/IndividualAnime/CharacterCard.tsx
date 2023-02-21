@@ -1,19 +1,21 @@
+import { VoiceActor } from "../../interfaces/interfaceAnimeCharacters";
+
 type Props = {
   characterName: string;
   characterImage?: string;
   characterRole?: string;
-  voiceActorImage?: string;
-  voiceActorLanguage?: string;
-  voiceActorName?: string;
+  voiceActor: VoiceActor[];
 };
 export const CharacterCard = ({
   characterName,
   characterImage,
   characterRole,
-  voiceActorImage,
-  voiceActorLanguage,
-  voiceActorName,
+  voiceActor,
 }: Props) => {
+  const japaneseVoiceActor = voiceActor.filter(
+    (item) => item.language === "Japanese"
+  );
+
   return (
     <div
       key={characterName}
@@ -34,15 +36,19 @@ export const CharacterCard = ({
       </div>
 
       <div className="flex flex-row-reverse">
-        <img
-          src={voiceActorImage}
-          alt={characterName}
-          className="object-fit h-auto w-14 rounded-l object-center"
-        ></img>
+        {japaneseVoiceActor[0] && (
+          <img
+            src={japaneseVoiceActor[0].person.images.jpg.image_url}
+            alt={characterName}
+            className="object-fit h-auto w-14 rounded-r object-center"
+          ></img>
+        )}
         <div className="flex flex-col items-end justify-between p-2 text-xs text-light">
-          <span className="font-semibold">{voiceActorName}</span>
-          <span className="text-[0.7rem] font-light tracking-tight text-[#e5e5e5]">
-            {voiceActorLanguage}
+          <span className="text-right font-semibold">
+            {japaneseVoiceActor[0] && japaneseVoiceActor[0].person.name}
+          </span>
+          <span className=" text-right text-[0.7rem] font-light tracking-tight text-[#e5e5e5]">
+            {japaneseVoiceActor[0] && japaneseVoiceActor[0].language}
           </span>
         </div>
       </div>
