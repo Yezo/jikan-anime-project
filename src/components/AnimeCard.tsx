@@ -66,7 +66,7 @@ export const AnimeCard = ({
           </p>
         </div>
         {/* Footer */}
-        <footer className="flex h-[3.5rem] max-h-[3.5rem] w-full flex-wrap items-center gap-1  rounded-br-md bg-gray pl-3">
+        <footer className="flex h-[3.5rem] max-h-[3.5rem] w-full flex-wrap items-center gap-1  rounded-b-md bg-gray pl-3 md:rounded-br-md">
           {genres.slice(0, 3).map((item) => (
             <div
               className="flex max-h-[2rem] max-w-fit items-center justify-center rounded-2xl bg-[#3480EA] px-2 py-1 pb-1.5 text-[0.65rem] font-semibold text-white shadow-md"

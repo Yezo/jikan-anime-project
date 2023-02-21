@@ -60,7 +60,7 @@ export const IndividualAnimePage = () => {
   });
 
   return (
-    <div className="container mx-auto bg-[#131A20] pb-24 font-primary text-light sm:px-12 sm:pb-8 lg:px-20">
+    <div className="container mx-auto bg-[#131A20] pb-24 font-primary text-light sm:px-12 sm:pb-8 lg:px-20 xl:px-40 2xl:px-52">
       <Navbar></Navbar>
       {!isLoading && anime && anime.data && characters && (
         <>
@@ -86,7 +86,7 @@ export const IndividualAnimePage = () => {
                     </div>
                   </div>
                 </div>
-                <div className="flex flex-col gap-1 pl-4 lg:pb-0">
+                <div className="flex flex-col gap-1 px-4 lg:pr-0 lg:pb-0">
                   <h3 className="font-bold">Description</h3>
                   <p className=" rounded bg-[#1D262F] p-5 text-[0.85rem] leading-6 text-[#d3d3d3]">
                     {removeWrittenByMALRewrite(anime.data.synopsis)}
@@ -95,7 +95,7 @@ export const IndividualAnimePage = () => {
               </div>
             </div>
           </div>
-          <div className="flex flex-col gap-8 p-4 lg:flex-row lg:gap-4 lg:p-0">
+          <div className="flex flex-col gap-8 p-4 lg:flex-row lg:gap-4 lg:p-0 ">
             <div className="gap- flex flex-col gap-1">
               <h3 className="font-bold ">Details</h3>
               <div className="grid grid-cols-2 gap-y-4 rounded bg-[#1D262F] p-4 tracking-normal  lg:min-w-[14rem] lg:grid-cols-1 lg:self-center lg:rounded lg:p-5">
@@ -220,7 +220,7 @@ export const IndividualAnimePage = () => {
             </div>
             <div className="flex w-full flex-col gap-1 ">
               <h3 className="font-bold">Cast</h3>
-              <div className="grid grid-cols-1 gap-2 sm:grid-cols-2 lg:grid-cols-3 xl:grid-cols-2">
+              <div className="grid grid-cols-1 gap-2 md:grid-cols-2 ">
                 {characters &&
                   characters.data &&
                   characters.data
