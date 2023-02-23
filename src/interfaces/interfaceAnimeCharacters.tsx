@@ -50,5 +50,6 @@ export interface Datum {
 [];
 
 export interface gObject {
+  status: any;
   data: Datum[];
 }
