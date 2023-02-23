@@ -1,5 +1,6 @@
 import { useState, useEffect } from "react";
 import { AnimeCard } from "../components/AnimeCard";
+import { Navbar } from "../components/Navbar/Navbar";
 import { RootObject } from "../interfaces/interfaceTop100Anime";
 
 export const HomePage = () => {
@@ -48,6 +49,7 @@ export const HomePage = () => {
 
   return (
     <div className="mx-auto min-h-screen max-w-[95rem] bg-[#131A20] p-10 font-primary text-text">
+      <Navbar />
       <div className="grid grid-cols-1 gap-8 lg:grid-cols-2 2xl:grid-cols-3">
         {animes && animes.data
           ? animes?.data.map(

@@ -1,20 +1,15 @@
-import { useState, useEffect } from "react";
-import { useParams } from "react-router-dom";
-import { CharacterCard } from "../components/IndividualAnime/CharacterCard";
-import { RootObject } from "../interfaces/interfaceSingularAnime";
-import { Datum, gObject } from "../interfaces/interfaceAnimeCharacters";
+import { useEffect, useState } from "react";
 import { AnimeDetail } from "../components/IndividualAnime/AnimeDetail";
 import { Navbar } from "../components/Navbar/Navbar";
+import { Data, RootObject } from "../interfaces/interfaceRandomAnime";
 
-export const IndividualAnimePage = () => {
+export const RandomAnime = () => {
   //States
-  const { animeId } = useParams();
-  const [isLoading, setIsLoading] = useState(true);
   const [anime, setAnime] = useState<RootObject | null>(null);
-  const [characters, setCharacters] = useState<gObject | null>(null);
+  const [isLoading, setIsLoading] = useState(true);
 
   //Constants
-  const API_URL = `https://api.jikan.moe/v4/anime/${animeId}`;
+  const API_URL = `https://api.jikan.moe/v4/random/anime`;
 
   //Fetch data
   useEffect(() => {
@@ -29,40 +24,24 @@ export const IndividualAnimePage = () => {
         controller.signal.aborted && console.log("Aborted the fetch.");
       }
     };
-
-    const fetchCharacters = async (id: string) => {
-      try {
-        const data = await fetch(
-          `https://api.jikan.moe/v4/anime/${id}/characters`
-        );
-        const resp = await data.json();
-        setCharacters(resp);
-        setIsLoading(false);
-      } catch (error) {
-        controller.signal.aborted && console.log("Aborted the fetch.");
-      }
-    };
-
-    animeId && fetchAPI();
-    animeId && fetchCharacters(animeId);
+    fetchAPI();
     return () => {
       controller.abort();
     };
   }, []);
 
   function removeWrittenByMALRewrite(url: string) {
-    return url.split("[Written by MAL Rewrite]")[0].replace(/\s*$/, "");
+    return url && url.split("[Written by MAL Rewrite]")[0].replace(/\s*$/, "");
   }
 
   const formatNums = new Intl.NumberFormat("en-US", {
     currency: "USD",
     minimumFractionDigits: 0,
   });
-
   return (
     <div className="container mx-auto bg-[#131A20] pb-24 font-primary text-light sm:px-12 sm:pb-8 lg:px-20 xl:px-40 2xl:px-52">
       <Navbar></Navbar>
-      {!isLoading && anime && anime.data && characters && (
+      {!isLoading && anime && anime.data && (
         <>
           {/* //Header component */}
           <div className="z-10 lg:mb-4">
@@ -218,7 +197,7 @@ export const IndividualAnimePage = () => {
                 )}
               </div>
             </div>
-            <div className="flex w-full flex-col gap-1 ">
+            {/* <div className="flex w-full flex-col gap-1 ">
               <h3 className="font-bold">Cast</h3>
               <div className="grid grid-cols-1 gap-2 md:grid-cols-2 ">
                 {characters &&
@@ -238,7 +217,7 @@ export const IndividualAnimePage = () => {
                       ></CharacterCard>
                     ))}
               </div>
-            </div>
+            </div> */}
           </div>
         </>
       )}
