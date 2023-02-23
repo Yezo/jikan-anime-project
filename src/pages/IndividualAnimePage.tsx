@@ -12,6 +12,7 @@ export const IndividualAnimePage = () => {
   const [isLoading, setIsLoading] = useState(true);
   const [anime, setAnime] = useState<RootObject | null>(null);
   const [characters, setCharacters] = useState<gObject | null>(null);
+  const [error, setError] = useState(null);
 
   //Constants
   const API_URL = `https://api.jikan.moe/v4/anime/${animeId}`;
@@ -50,6 +51,10 @@ export const IndividualAnimePage = () => {
     };
   }, []);
 
+  useEffect(() => {
+    setError(characters?.status);
+  }, [characters]);
+
   function removeWrittenByMALRewrite(url: string) {
     return url.split("[Written by MAL Rewrite]")[0].replace(/\s*$/, "");
   }
@@ -58,6 +63,8 @@ export const IndividualAnimePage = () => {
     currency: "USD",
     minimumFractionDigits: 0,
   });
+
+  const isEmpty = (arr: unknown) => Array.isArray(arr) && !arr.length;
 
   return (
     <div className="container mx-auto bg-[#131A20] pb-24 font-primary text-light sm:px-12 sm:pb-8 lg:px-20 xl:px-40 2xl:px-52">
@@ -70,7 +77,7 @@ export const IndividualAnimePage = () => {
               <img
                 src={anime.data.images.jpg.large_image_url}
                 alt={anime.data.title}
-                className="max-h-60 w-full object-cover object-[center] lg:min-h-[20rem] lg:w-[14rem] lg:rounded"
+                className="max-h-60 w-full object-cover object-[center] lg:min-h-[20rem] lg:min-w-[14rem] lg:max-w-[14rem] lg:rounded"
               ></img>
               <div className=" flex flex-col justify-between">
                 <div>
@@ -86,12 +93,18 @@ export const IndividualAnimePage = () => {
                     </div>
                   </div>
                 </div>
-                <div className="flex flex-col gap-1 px-4 lg:pr-0 lg:pb-0">
-                  <h3 className="font-bold">Description</h3>
-                  <p className=" rounded bg-[#1D262F] p-5 text-[0.85rem] leading-6 text-[#d3d3d3]">
-                    {removeWrittenByMALRewrite(anime.data.synopsis)}
-                  </p>
-                </div>
+                {anime.data.synopsis ? (
+                  <div className="flex flex-col gap-1 px-4 lg:pr-0 lg:pb-0">
+                    <h3 className="font-bold">Description</h3>
+                    <p className=" rounded bg-[#1D262F] p-5 text-[0.85rem] leading-6 text-[#d3d3d3]">
+                      {removeWrittenByMALRewrite(anime.data.synopsis)}
+                    </p>
+                  </div>
+                ) : (
+                  <div className="rounded bg-[#1D262F] p-5 lg:pr-0 lg:pb-0">
+                    There is no synopsis for this anime.
+                  </div>
+                )}
               </div>
             </div>
           </div>
@@ -161,13 +174,13 @@ export const IndividualAnimePage = () => {
                   </AnimeDetail>
                 )}
 
-                {anime.data.favorites && (
+                {!isEmpty(anime.data.favorites) && (
                   <AnimeDetail title="Favorites">
                     <span>{formatNums.format(anime.data.favorites)}</span>
                   </AnimeDetail>
                 )}
 
-                {anime.data.studios && (
+                {!isEmpty(anime.data.studios) && (
                   <AnimeDetail title="Studio">
                     {anime.data.studios.map((item) => (
                       <span key={item.name}>{item.name}</span>
@@ -175,7 +188,7 @@ export const IndividualAnimePage = () => {
                   </AnimeDetail>
                 )}
 
-                {anime.data.demographics && (
+                {!isEmpty(anime.data.demographics) && (
                   <AnimeDetail title="Demographic">
                     {anime.data.demographics.map((item) => (
                       <div key={item.name}>{item.name}</div>
@@ -201,7 +214,7 @@ export const IndividualAnimePage = () => {
                   </AnimeDetail>
                 )}
 
-                {anime.data.producers && (
+                {!isEmpty(anime.data.producers) && (
                   <AnimeDetail title="Producers">
                     {anime.data.producers.map((item) => (
                       <div key={item.name}>{item.name}</div>
@@ -209,7 +222,7 @@ export const IndividualAnimePage = () => {
                   </AnimeDetail>
                 )}
 
-                {anime.data.genres && (
+                {!isEmpty(anime.data.genres) && (
                   <AnimeDetail title="Genres">
                     {anime.data.genres.map((item) => (
                       <div key={item.name}>{item.name}</div>
@@ -218,27 +231,29 @@ export const IndividualAnimePage = () => {
                 )}
               </div>
             </div>
-            <div className="flex w-full flex-col gap-1 ">
-              <h3 className="font-bold">Cast</h3>
-              <div className="grid grid-cols-1 gap-2 md:grid-cols-2 ">
-                {characters &&
-                  characters.data &&
-                  characters.data
-                    .sort((a: Datum, b: Datum) =>
-                      a.favorites < b.favorites ? 1 : -1
-                    )
-                    .slice(0, 12)
-                    .map(({ character, role, voice_actors }) => (
-                      <CharacterCard
-                        characterName={character.name}
-                        characterImage={character.images.jpg.image_url}
-                        characterRole={role}
-                        voiceActor={voice_actors}
-                        key={character.name}
-                      ></CharacterCard>
-                    ))}
+            {characters && !isEmpty(characters.data) && (
+              <div className="flex w-full flex-col gap-1 ">
+                {!error && <h3 className="font-bold">Cast</h3>}
+                <div className="grid grid-cols-1 gap-2 md:grid-cols-2 ">
+                  {characters &&
+                    characters.data &&
+                    characters.data
+                      .sort((a: Datum, b: Datum) =>
+                        a.favorites < b.favorites ? 1 : -1
+                      )
+                      .slice(0, 12)
+                      .map(({ character, role, voice_actors }) => (
+                        <CharacterCard
+                          characterName={character.name}
+                          characterImage={character.images.jpg.image_url}
+                          characterRole={role}
+                          voiceActor={voice_actors}
+                          key={character.name}
+                        ></CharacterCard>
+                      ))}
+                </div>
               </div>
-            </div>
+            )}
           </div>
         </>
       )}
