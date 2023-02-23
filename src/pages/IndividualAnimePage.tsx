@@ -1,5 +1,5 @@
 import { useState, useEffect } from "react";
-import { Link, useParams } from "react-router-dom";
+import { useParams } from "react-router-dom";
 import { CharacterCard } from "../components/IndividualAnime/CharacterCard";
 import { RootObject } from "../interfaces/interfaceSingularAnime";
 import { Datum, gObject } from "../interfaces/interfaceAnimeCharacters";
@@ -227,7 +227,7 @@ export const IndividualAnimePage = () => {
                     .sort((a: Datum, b: Datum) =>
                       a.favorites < b.favorites ? 1 : -1
                     )
-                    .slice(0, 8)
+                    .slice(0, 12)
                     .map(({ character, role, voice_actors }) => (
                       <CharacterCard
                         characterName={character.name}

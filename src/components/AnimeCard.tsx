@@ -36,7 +36,7 @@ export const AnimeCard = ({
   };
 
   return (
-    <div className="flex h-[400px] flex-col rounded-md bg-white shadow-md ring-1 ring-black/[.05] sm:h-[275px]  sm:max-w-xl sm:flex-row">
+    <div className="flex h-[400px] flex-col rounded-md bg-[white] shadow-md ring-1 ring-black/[.05] sm:h-[275px]  sm:max-w-xl sm:flex-row">
       {/* Left side */}
 
       <img
@@ -48,7 +48,7 @@ export const AnimeCard = ({
 
       {/* Right side */}
       <div className="flex flex-col justify-between">
-        <div className="flex h-full flex-col justify-between gap-4 p-3">
+        <div className="flex h-full flex-col justify-evenly gap-4 p-3">
           {/* Title + Air Date */}
           <div className="flex flex-col gap-1">
             <Link to={`/anime/${id}`}>
@@ -56,7 +56,7 @@ export const AnimeCard = ({
                 {title}
               </h2>
             </Link>
-            <p className="text-xs font-semibold">
+            <p className="text-xs font-semibold text-text">
               {episodes} episodes aired on {removeExtraDate(aired.string)}
             </p>
           </div>
@@ -69,7 +69,7 @@ export const AnimeCard = ({
         <footer className="flex h-[3.5rem] max-h-[3.5rem] w-full flex-wrap items-center gap-1  rounded-b-md bg-gray pl-3 md:rounded-br-md">
           {genres.slice(0, 3).map((item) => (
             <div
-              className="flex max-h-[2rem] max-w-fit items-center justify-center rounded-2xl bg-[#3480EA] px-2 py-1 pb-1.5 text-[0.65rem] font-semibold text-white shadow-md"
+              className="flex max-h-[2rem] max-w-fit flex-wrap items-center justify-center rounded-2xl bg-[#3480EA] px-2 py-1 pb-1.5 text-[0.65rem] font-semibold text-white shadow-md"
               key={item.mal_id}
             >
               {item.name}
