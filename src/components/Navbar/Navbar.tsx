@@ -134,7 +134,7 @@ export const Navbar = () => {
           </Link>
 
           <div
-            className="flex flex-col items-center justify-center gap-1"
+            className="flex cursor-pointer flex-col items-center justify-center gap-1"
             onClick={handleRefreshRandomAnimePage}
           >
             <svg

@@ -37,7 +37,7 @@ export const Top100AnimePage = () => {
     <div className="container mx-auto bg-[#F0F0F0] pb-24 font-primary text-light">
       <h1>top 100 anime</h1>
       <Navbar />
-      <div className="grid grid-cols-1 gap-8 lg:grid-cols-2 2xl:grid-cols-3">
+      <div className="mx-auto flex h-full w-full flex-wrap items-center justify-center gap-3">
         {animes && animes.data
           ? animes?.data.map(
               ({
@@ -49,24 +49,20 @@ export const Top100AnimePage = () => {
                 synopsis,
                 genres,
               }) => (
-                <div
-                  className="flex flex-col items-center justify-center rounded-md"
+                <AnimeCard
+                  id={mal_id}
+                  imageURL={images.jpg.large_image_url}
+                  title={title}
+                  episodes={episodes}
+                  aired={aired}
+                  synopsis={synopsis}
+                  synopsisNum={200}
+                  genres={genres}
+                  removeExtraDate={removeExtraDate}
+                  removeWrittenByMALRewrite={removeWrittenByMALRewrite}
+                  truncateString={truncateString}
                   key={mal_id}
-                >
-                  <AnimeCard
-                    id={mal_id}
-                    imageURL={images.jpg.large_image_url}
-                    title={title}
-                    episodes={episodes}
-                    aired={aired}
-                    synopsis={synopsis}
-                    synopsisNum={250}
-                    genres={genres}
-                    removeExtraDate={removeExtraDate}
-                    removeWrittenByMALRewrite={removeWrittenByMALRewrite}
-                    truncateString={truncateString}
-                  ></AnimeCard>
-                </div>
+                ></AnimeCard>
               )
             )
           : null}

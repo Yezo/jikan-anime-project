@@ -1,5 +1,4 @@
 import { Route, Routes } from "react-router-dom";
-import { Searchbar } from "./components/Searchbar/Searchbar";
 import { CurrentlyAiringAnime } from "./pages/CurrentlyAiringAnime";
 import { HomePage } from "./pages/HomePage";
 import { IndividualAnimePage } from "./pages/IndividualAnimePage";

@@ -1,14 +1,8 @@
-import { useEffect, useState } from "react";
-import { RootObject } from "../../interfaces/interfaceTop100Anime";
-
 type Props = {
-  setAnimes: React.Dispatch<React.SetStateAction<RootObject | null>>;
   setQuery: React.Dispatch<React.SetStateAction<string>>;
 };
 
-export const Searchbar = ({ setAnimes, setQuery }: Props) => {
-  //States
-
+export const Searchbar = ({ setQuery }: Props) => {
   return (
     <div className="grid h-40 place-items-center">
       <form>
@@ -19,7 +13,7 @@ export const Searchbar = ({ setAnimes, setQuery }: Props) => {
           <input
             type="searchbar"
             id="searchbar"
-            placeholder="Search something..."
+            placeholder="Type the name of an anime..."
             className="peer h-7 w-full border-none bg-transparent p-0 px-1 py-1 italic tracking-tighter focus:border-transparent focus:placeholder-transparent focus:outline-none focus:ring-0 sm:text-sm"
             onChange={(e) => setQuery(e.target.value)}
           />

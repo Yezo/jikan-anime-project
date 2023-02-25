@@ -29,10 +29,10 @@ export const HomePage = () => {
   }, [query]);
 
   return (
-    <div className="mx-auto min-h-screen max-w-[95rem] bg-[#131A20] p-10 font-primary text-text">
+    <div className="container mx-auto min-h-screen bg-[#131A20] p-10 font-primary text-text lg:px-20">
       <Navbar />
-      <Searchbar setAnimes={setAnimes} setQuery={setQuery} />
-      <div className="grid grid-cols-1 gap-8 lg:grid-cols-2 2xl:grid-cols-3">
+      <Searchbar setQuery={setQuery} />
+      <div className="mx-auto flex h-full w-full flex-wrap items-center justify-center gap-3">
         {animes && animes.data
           ? animes?.data.map(
               ({
@@ -44,24 +44,20 @@ export const HomePage = () => {
                 synopsis,
                 genres,
               }) => (
-                <div
-                  className="flex flex-col items-center justify-center rounded-md"
+                <AnimeCard
+                  id={mal_id}
+                  imageURL={images.jpg.large_image_url}
+                  title={title}
+                  episodes={episodes}
+                  aired={aired}
+                  synopsis={synopsis}
+                  synopsisNum={200}
+                  genres={genres}
+                  removeExtraDate={removeExtraDate}
+                  removeWrittenByMALRewrite={removeWrittenByMALRewrite}
+                  truncateString={truncateString}
                   key={mal_id}
-                >
-                  <AnimeCard
-                    id={mal_id}
-                    imageURL={images.jpg.large_image_url}
-                    title={title}
-                    episodes={episodes}
-                    aired={aired}
-                    synopsis={synopsis}
-                    synopsisNum={200}
-                    genres={genres}
-                    removeExtraDate={removeExtraDate}
-                    removeWrittenByMALRewrite={removeWrittenByMALRewrite}
-                    truncateString={truncateString}
-                  ></AnimeCard>
-                </div>
+                ></AnimeCard>
               )
             )
           : null}

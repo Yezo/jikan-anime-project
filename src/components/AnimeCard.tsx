@@ -36,23 +36,25 @@ export const AnimeCard = ({
   };
 
   return (
-    <div className="flex flex-col rounded-md  bg-[white] shadow-md ring-1 ring-black/[.05] sm:h-[275px] sm:min-w-[30rem] sm:max-w-[30rem] sm:flex-row lg:max-h-[275px] lg:min-h-[275px]">
-      {/* Left side */}
+    //! 380 x 300
+    //TODO  recreate the anime card from sc ratch
 
+    <div className="flex  min-w-full flex-col rounded-md bg-[white] shadow-md ring-1 ring-black/[.05] sm:h-[275px] sm:flex-row lg:max-h-[275px] lg:min-h-[275px] xl:min-w-[28rem] xl:max-w-[28rem]">
+      {/* Left side */}
       <img
-        className="h-full w-full cursor-pointer rounded-t-md object-cover object-[top_center] sm:h-auto sm:w-48 sm:rounded-none sm:rounded-l-md lg:max-h-[275px] lg:min-h-[275px] lg:min-w-[195px] lg:max-w-[195px]"
+        className="max-h-[175px] cursor-pointer rounded-t-md object-cover object-[top_center]  hover:brightness-75 sm:max-h-[275px] sm:min-h-[275px] sm:min-w-[195px] sm:max-w-[195px] sm:rounded-none sm:rounded-l-md"
         src={imageURL}
         alt={title}
         onClick={() => move(`/anime/${id}`)}
       ></img>
 
       {/* Right side */}
-      <div className="flex w-full flex-col justify-between">
+      <div className="flex h-full w-full flex-col justify-between">
         <div className="flex h-full flex-col justify-between gap-4 p-3">
           {/* Title + Air Date */}
           <div className="flex flex-col gap-1">
             <Link to={`/anime/${id}`}>
-              <h2 className="text-xl font-semibold tracking-tighter text-[#393831]">
+              <h2 className="text-md font-semibold tracking-tighter text-[#393831] transition-all  hover:text-[#3480EA]">
                 {title}
               </h2>
             </Link>
