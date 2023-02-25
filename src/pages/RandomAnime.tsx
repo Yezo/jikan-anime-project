@@ -2,7 +2,7 @@ import { useEffect, useState } from "react";
 import { AnimeDetail } from "../components/IndividualAnime/AnimeDetail";
 import { CharacterCard } from "../components/IndividualAnime/CharacterCard";
 import { Navbar } from "../components/Navbar/Navbar";
-import { Data, RootObject } from "../interfaces/interfaceRandomAnime";
+import { RootObject } from "../interfaces/interfaceRandomAnime";
 import { Datum, gObject } from "../interfaces/interfaceAnimeCharacters";
 
 export const RandomAnime = () => {

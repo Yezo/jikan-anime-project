@@ -1,55 +1,71 @@
 import { useState, useEffect } from "react";
 import { AnimeCard } from "../components/AnimeCard";
 import { Navbar } from "../components/Navbar/Navbar";
+import { Searchbar } from "../components/Searchbar/Searchbar";
 import { RootObject } from "../interfaces/interfaceTop100Anime";
 
 export const HomePage = () => {
   //States
   const [animes, setAnimes] = useState<RootObject | null>(null);
-  const [pagination, setPagination] = useState<string>("1");
+  // const [pagination, setPagination] = useState<string>("1");
+  const [query, setQuery] = useState<string>("");
+  // const pages = ["1", "2", "3", "4", "5"];
+  const url = `https://api.jikan.moe/v4/anime?q=${query}`;
 
-  const pages = ["1", "2", "3", "4", "5"];
-  const url = `https://api.jikan.moe/v4/top/anime?page=${pagination}&limit=21`;
+  // useEffect(() => {
+  //   window.scrollTo(0, 0);
+  //   const controller = new AbortController();
+  //   const fetchAPI = async () => {
+  //     try {
+  //       const data = await fetch(url);
+  //       const resp = await data.json();
+  //       setAnimes(resp);
+  //     } catch (error) {
+  //       controller.signal.aborted && console.log("Aborted the fetch.");
+  //     }
+  //   };
+  //   fetchAPI();
+  //   return () => {
+  //     controller.abort();
+  //   };
+  // }, [pagination]);
 
   useEffect(() => {
-    window.scrollTo(0, 0);
-    const controller = new AbortController();
-    const fetchAPI = async () => {
-      try {
-        const data = await fetch(url);
-        const resp = await data.json();
-        setAnimes(resp);
-      } catch (error) {
-        controller.signal.aborted && console.log("Aborted the fetch.");
+    const getData = setTimeout(() => {
+      if (query.length > 0) {
+        fetch(`https://api.jikan.moe/v4/anime?q=${query}`)
+          .then((res) => res.json())
+          .then((res) => setAnimes(res));
       }
-    };
-    fetchAPI();
-    return () => {
-      controller.abort();
-    };
-  }, [pagination]);
+    }, 500);
+
+    return () => clearTimeout(getData);
+  }, [query]);
 
   //Helper functions
   function removeExtraDate(url: string) {
-    return url.split("to")[0].replace(/\s*$/, "");
+    return url && url.split("to")[0].replace(/\s*$/, "");
   }
 
   function removeWrittenByMALRewrite(url: string) {
-    return url.split("[Written by MAL Rewrite]")[0].replace(/\s*$/, "");
+    return url && url.split("[Written by MAL Rewrite]")[0].replace(/\s*$/, "");
   }
 
   function truncateString(str: string, num: number) {
-    const trimmedString = str.slice(0, num);
-    const good = trimmedString.slice(
-      0,
-      Math.min(trimmedString.length, trimmedString.lastIndexOf(" "))
-    );
-    return str.length > num ? good.slice(0, num) + "..." : str;
+    const trimmedString = str && str.slice(0, num);
+    const good =
+      trimmedString &&
+      trimmedString.slice(
+        0,
+        Math.min(trimmedString.length, trimmedString.lastIndexOf(" "))
+      );
+    return good && str.length > num ? good.slice(0, num) + "..." : str;
   }
 
   return (
     <div className="mx-auto min-h-screen max-w-[95rem] bg-[#131A20] p-10 font-primary text-text">
       <Navbar />
+      <Searchbar setAnimes={setAnimes} setQuery={setQuery} />
       <div className="grid grid-cols-1 gap-8 lg:grid-cols-2 2xl:grid-cols-3">
         {animes && animes.data
           ? animes?.data.map(
@@ -73,7 +89,7 @@ export const HomePage = () => {
                     episodes={episodes}
                     aired={aired}
                     synopsis={synopsis}
-                    synopsisNum={150}
+                    synopsisNum={200}
                     genres={genres}
                     removeExtraDate={removeExtraDate}
                     removeWrittenByMALRewrite={removeWrittenByMALRewrite}
@@ -85,7 +101,7 @@ export const HomePage = () => {
           : null}
       </div>
 
-      <div className="mt-4 flex flex-col items-center justify-center">
+      {/* <div className="mt-4 flex flex-col items-center justify-center">
         Page
         <ul className="flex gap-4">
           {pages.map((item) => (
@@ -103,7 +119,7 @@ export const HomePage = () => {
             </li>
           ))}
         </ul>
-      </div>
+      </div> */}
     </div>
   );
 };
