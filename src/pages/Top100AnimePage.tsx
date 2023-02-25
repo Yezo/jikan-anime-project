@@ -2,7 +2,11 @@ import { useState, useEffect } from "react";
 import { AnimeCard } from "../components/AnimeCard";
 import { Navbar } from "../components/Navbar/Navbar";
 import { RootObject } from "../interfaces/interfaceTop100Anime";
-
+import {
+  removeExtraDate,
+  truncateString,
+  removeWrittenByMALRewrite,
+} from "../helpers/helperFunctions";
 export const Top100AnimePage = () => {
   //States
   const [animes, setAnimes] = useState<RootObject | null>(null);
@@ -28,24 +32,6 @@ export const Top100AnimePage = () => {
       controller.abort();
     };
   }, [pagination]);
-
-  //Helper functions
-  function removeExtraDate(url: string) {
-    return url.split("to")[0].replace(/\s*$/, "");
-  }
-
-  function removeWrittenByMALRewrite(url: string) {
-    return url.split("[Written by MAL Rewrite]")[0].replace(/\s*$/, "");
-  }
-
-  function truncateString(str: string, num: number) {
-    const trimmedString = str.slice(0, num);
-    const good = trimmedString.slice(
-      0,
-      Math.min(trimmedString.length, trimmedString.lastIndexOf(" "))
-    );
-    return str.length > num ? good.slice(0, num) + "..." : str;
-  }
 
   return (
     <div className="container mx-auto bg-[#F0F0F0] pb-24 font-primary text-light">

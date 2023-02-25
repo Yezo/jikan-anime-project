@@ -4,6 +4,10 @@ import { CharacterCard } from "../components/IndividualAnime/CharacterCard";
 import { Navbar } from "../components/Navbar/Navbar";
 import { RootObject } from "../interfaces/interfaceRandomAnime";
 import { Datum, gObject } from "../interfaces/interfaceAnimeCharacters";
+import {
+  removeWrittenByMALRewrite,
+  formatNums,
+} from "../helpers/helperFunctions";
 
 export const RandomAnime = () => {
   //States
@@ -64,15 +68,6 @@ export const RandomAnime = () => {
   useEffect(() => {
     setError(characters?.status);
   }, [characters]);
-
-  function removeWrittenByMALRewrite(url: string) {
-    return url && url.split("[Written by MAL Rewrite]")[0].replace(/\s*$/, "");
-  }
-
-  const formatNums = new Intl.NumberFormat("en-US", {
-    currency: "USD",
-    minimumFractionDigits: 0,
-  });
 
   const isEmpty = (arr: unknown) => Array.isArray(arr) && !arr.length;
   return (

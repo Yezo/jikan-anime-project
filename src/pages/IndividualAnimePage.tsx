@@ -5,6 +5,11 @@ import { RootObject } from "../interfaces/interfaceSingularAnime";
 import { Datum, gObject } from "../interfaces/interfaceAnimeCharacters";
 import { AnimeDetail } from "../components/IndividualAnime/AnimeDetail";
 import { Navbar } from "../components/Navbar/Navbar";
+import {
+  removeWrittenByMALRewrite,
+  isEmpty,
+  formatNums,
+} from "../helpers/helperFunctions";
 
 export const IndividualAnimePage = () => {
   //States
@@ -54,17 +59,6 @@ export const IndividualAnimePage = () => {
   useEffect(() => {
     setError(characters?.status);
   }, [characters]);
-
-  function removeWrittenByMALRewrite(url: string) {
-    return url.split("[Written by MAL Rewrite]")[0].replace(/\s*$/, "");
-  }
-
-  const formatNums = new Intl.NumberFormat("en-US", {
-    currency: "USD",
-    minimumFractionDigits: 0,
-  });
-
-  const isEmpty = (arr: unknown) => Array.isArray(arr) && !arr.length;
 
   return (
     <div className="container mx-auto bg-[#131A20] pb-24 font-primary text-light sm:px-12 sm:pb-8 lg:px-20 xl:px-40 2xl:px-52">
