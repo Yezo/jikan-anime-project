@@ -7,7 +7,7 @@ import { Top100AnimePage } from "./pages/Top100AnimePage";
 
 function App() {
   return (
-    <div className="min-w-screen min-h-screen bg-[#131A20]">
+    <div className="min-w-screen min-h-screen bg-[#EDF1F5]">
       <Routes>
         <Route path="/" element={<HomePage />}></Route>
         <Route path="/anime/:animeId" element={<IndividualAnimePage />} />

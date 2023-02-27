@@ -34,10 +34,9 @@ export const Top100AnimePage = () => {
   }, [pagination]);
 
   return (
-    <div className="container mx-auto bg-[#F0F0F0] pb-24 font-primary text-light">
-      <h1>top 100 anime</h1>
+    <div className="container mx-auto min-h-screen bg-[#EDF1F5] p-10 font-primary text-text lg:px-20">
       <Navbar />
-      <div className="mx-auto flex h-full w-full flex-wrap items-center justify-center gap-3">
+      <div className="mx-auto flex h-full w-full flex-wrap items-center justify-center gap-3 pt-8">
         {animes && animes.data
           ? animes?.data.map(
               ({
@@ -68,12 +67,12 @@ export const Top100AnimePage = () => {
           : null}
       </div>
 
-      <div className="mt-4 flex flex-col items-center justify-center">
+      <div className="mt-4 flex flex-col items-center justify-center text-sm font-semibold tracking-tight text-primary">
         Page
         <ul className="flex gap-4">
           {pages.map((item) => (
             <li
-              className={`flex cursor-pointer gap-4 hover:font-bold ${
+              className={`flex cursor-pointer gap-4 hover:font-bold hover:underline ${
                 item === pagination ? "font-bold" : null
               }  `}
               key={item}

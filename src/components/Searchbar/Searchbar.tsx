@@ -4,11 +4,11 @@ type Props = {
 
 export const Searchbar = ({ setQuery }: Props) => {
   return (
-    <div className="grid h-40 place-items-center">
+    <div className="grid place-items-center py-8">
       <form>
         <label
           htmlFor="searchbar"
-          className="border-secondary focus-within:border-secondary relative block overflow-hidden border-b pt-3"
+          className="border-secondary focus-within:border-secondary relative block overflow-hidden border-b"
         >
           <input
             type="searchbar"

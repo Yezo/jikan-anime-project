@@ -12,6 +12,7 @@ module.exports = {
         light: "#FAFCFC",
         gray: "#EDF1F5",
         text: "#7B8EA1",
+        darktext: "#393831",
       },
     },
   },

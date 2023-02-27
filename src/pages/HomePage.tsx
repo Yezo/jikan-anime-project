@@ -29,7 +29,7 @@ export const HomePage = () => {
   }, [query]);
 
   return (
-    <div className="container mx-auto min-h-screen bg-[#131A20] p-10 font-primary text-text lg:px-20">
+    <div className="container mx-auto min-h-screen bg-[#EDF1F5] p-10 font-primary text-text lg:px-20">
       <Navbar />
       <Searchbar setQuery={setQuery} />
       <div className="mx-auto flex h-full w-full flex-wrap items-center justify-center gap-3">
