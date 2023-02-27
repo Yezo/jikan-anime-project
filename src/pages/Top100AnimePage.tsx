@@ -34,8 +34,13 @@ export const Top100AnimePage = () => {
   }, [pagination]);
 
   return (
-    <div className="container mx-auto min-h-screen bg-[#EDF1F5] p-10 font-primary text-text lg:px-20">
+    <div className="container mx-auto bg-[#EDF1F5] py-10 pb-24 font-primary  sm:px-12 sm:pb-8 lg:px-20 xl:px-40 2xl:px-52">
       <Navbar />
+      <div className="grid place-items-center pt-8">
+        <h2 className="text-2xl font-bold tracking-tighter text-darktext">
+          Top 100 Anime
+        </h2>
+      </div>
       <div className="mx-auto flex h-full w-full flex-wrap items-center justify-center gap-3 pt-8">
         {animes && animes.data
           ? animes?.data.map(

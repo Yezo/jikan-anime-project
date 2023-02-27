@@ -6,7 +6,7 @@ type Props = {
   id: number;
   imageURL: string;
   title: string;
-  episodes: number;
+  episodes?: number;
   aired: Aired;
   synopsis: string;
   synopsisNum: number;
@@ -39,7 +39,7 @@ export const AnimeCard = ({
     //! 380 x 300
     //TODO  recreate the anime card from sc ratch
 
-    <div className="flex  min-w-full flex-col rounded-md bg-[white] shadow-md ring-1 ring-black/[.05] sm:h-[275px] sm:flex-row lg:max-h-[275px] lg:min-h-[275px] xl:min-w-[28rem] xl:max-w-[28rem]">
+    <div className="flex min-w-full flex-col rounded-md bg-[white] shadow-md ring-1 ring-black/[.05] sm:h-[275px] sm:flex-row lg:max-h-[275px] lg:min-h-[275px] xl:min-w-[33rem] xl:max-w-[33rem]">
       {/* Left side */}
       <img
         className="max-h-[175px] cursor-pointer rounded-t-md object-cover object-[top_center]  hover:brightness-75 sm:max-h-[275px] sm:min-h-[275px] sm:min-w-[195px] sm:max-w-[195px] sm:rounded-none sm:rounded-l-md"

@@ -85,7 +85,7 @@ export const Navbar = () => {
         <h1 className="text-2xl font-bold tracking-tighter">
           <Link to="/">AniFlux</Link>
         </h1>
-        <div className="flex items-center gap-4 md:gap-6">
+        <div className="flex items-center gap-4 md:gap-10">
           <Link to="/">
             <div className="flex cursor-pointer flex-col items-center justify-center gap-1 hover:underline">
               <svg
