@@ -81,7 +81,7 @@ export const Navbar = () => {
         </Link>
       </nav> */}
 
-      <nav className=" container flex flex-col items-center justify-center gap-4 border-b border-b-slate-300 px-6 pb-4 text-sm font-semibold tracking-tight text-primary sm:flex-row sm:justify-between">
+      <nav className=" text-primary container flex flex-col items-center justify-center gap-4 border-b border-b-slate-300 px-6 pb-4 text-sm font-semibold tracking-tight text-titleTEXT sm:flex-row sm:justify-between">
         <h1 className="text-2xl font-bold tracking-tighter hover:text-accent">
           <Link to="/">AniFlux</Link>
         </h1>

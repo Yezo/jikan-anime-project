@@ -54,24 +54,24 @@ export const AnimeCard = ({
           {/* Title + Air Date */}
           <div className="flex flex-col gap-1">
             <Link to={`/anime/${id}`}>
-              <h2 className="text-md font-semibold tracking-tighter text-[#393831] transition-all  hover:text-[#3480EA]">
+              <h2 className="text-md font-semibold tracking-tighter text-titleTEXT transition-all  hover:text-accent">
                 {title}
               </h2>
             </Link>
-            <p className="text-text text-xs font-semibold">
+            <p className="text-xs font-semibold text-normalTEXT">
               {episodes} episodes aired on {removeExtraDate(aired.string)}
             </p>
           </div>
           {/* Sypnosis Content */}
-          <p className="text-text max-h-[10rem] max-w-full overflow-y-auto  overscroll-contain text-[0.7rem]  leading-5">
+          <p className="max-h-[10rem] max-w-full overflow-y-auto overscroll-contain  text-[0.7rem] leading-5  text-normalTEXT">
             {truncateString(removeWrittenByMALRewrite(synopsis), synopsisNum)}
           </p>
         </div>
         {/* Footer */}
-        <footer className="flex h-[3.5rem] max-h-[3.5rem] w-full flex-wrap items-center gap-1  rounded-b-md bg-primaryBG pl-3 md:rounded-br-md">
-          {genres.slice(0, 3).map((item) => (
+        <footer className="flex h-[3.5rem] max-h-[3.5rem] w-full flex-wrap items-center gap-1   bg-primaryBG pl-3 md:rounded-br-md">
+          {genres.slice(0, 4).map((item) => (
             <div
-              className="flex max-h-[2rem] max-w-fit flex-wrap items-center justify-center rounded-2xl bg-[#3480EA] px-2 py-1 pb-1.5 text-[0.65rem] font-semibold text-white shadow-md"
+              className="flex max-h-[2rem] max-w-fit flex-wrap items-center justify-center rounded-2xl bg-accent px-2 py-1 pb-1.5 text-[0.65rem] font-semibold text-white shadow-md"
               key={item.mal_id}
             >
               {item.name}

@@ -9,7 +9,7 @@ module.exports = {
       },
       colors: {
         primaryBG: "#EDF1F5", //white
-        titleTEXT: "#393831", // dark black
+        titleTEXT: "#2d2d29", // dark black
         normalTEXT: "#7B8EA1", //gray
         accent: "#3480EA", //blue
       },
