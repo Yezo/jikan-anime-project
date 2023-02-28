@@ -67,6 +67,10 @@ export const HomePage = () => {
             Sorry, we could not find any animes that matched your search result.
           </div>
         )}
+
+        <div className="font-heading grid h-20 w-20 place-items-center bg-accent text-5xl font-bold text-primaryBG">
+          aF
+        </div>
       </div>
     </div>
   );
