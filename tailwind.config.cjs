@@ -8,12 +8,10 @@ module.exports = {
         primary: ['"Inter", sans-serif;'],
       },
       colors: {
-        primary: "#222435",
-        light: "#FAFCFC",
-        gray: "#EDF1F5",
-        text: "#7B8EA1",
-        darktext: "#393831",
-        accent: "#3480EA",
+        primaryBG: "#EDF1F5", //white
+        titleTEXT: "#393831", // dark black
+        normalTEXT: "#7B8EA1", //gray
+        accent: "#3480EA", //blue
       },
     },
   },

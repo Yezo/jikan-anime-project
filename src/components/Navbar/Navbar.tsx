@@ -87,7 +87,7 @@ export const Navbar = () => {
         </h1>
         <div className="flex flex-wrap items-center justify-between gap-4 md:justify-center md:gap-10">
           <Link to="/">
-            <div className="flex cursor-pointer flex-col items-center justify-center  hover:text-accent">
+            <div className="flex flex-col items-center justify-center gap-1 hover:text-accent">
               <svg
                 xmlns="http://www.w3.org/2000/svg"
                 width="20"

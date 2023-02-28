@@ -29,38 +29,34 @@ export const HomePage = () => {
   }, [query]);
 
   return (
-    <div className="container mx-auto bg-[#EDF1F5] py-10 pb-24 font-primary  sm:px-12 sm:pb-8 lg:px-20 xl:px-40 2xl:px-52">
+    <div className="container mx-auto bg-primaryBG py-10 px-6 pb-24 font-primary  sm:px-12 sm:pb-8 lg:px-20 xl:px-40 2xl:px-52">
       <Navbar />
       <Searchbar setQuery={setQuery} />
-      <div className="mx-auto flex h-full w-full flex-wrap items-center justify-center gap-3">
-        {animes && animes.data
-          ? animes?.data.map(
-              ({
-                mal_id,
-                images,
-                title,
-                episodes,
-                aired,
-                synopsis,
-                genres,
-              }) => (
-                <AnimeCard
-                  id={mal_id}
-                  imageURL={images.jpg.large_image_url}
-                  title={title}
-                  episodes={episodes}
-                  aired={aired}
-                  synopsis={synopsis}
-                  synopsisNum={200}
-                  genres={genres}
-                  removeExtraDate={removeExtraDate}
-                  removeWrittenByMALRewrite={removeWrittenByMALRewrite}
-                  truncateString={truncateString}
-                  key={mal_id}
-                ></AnimeCard>
-              )
+      <div className="mx-auto flex h-full w-full flex-wrap items-center justify-center gap-3 ">
+        {animes && animes.data && animes.pagination.items.count > 0 ? (
+          animes?.data.map(
+            ({ mal_id, images, title, episodes, aired, synopsis, genres }) => (
+              <AnimeCard
+                id={mal_id}
+                imageURL={images.jpg.large_image_url}
+                title={title}
+                episodes={episodes}
+                aired={aired}
+                synopsis={synopsis}
+                synopsisNum={200}
+                genres={genres}
+                removeExtraDate={removeExtraDate}
+                removeWrittenByMALRewrite={removeWrittenByMALRewrite}
+                truncateString={truncateString}
+                key={mal_id}
+              ></AnimeCard>
             )
-          : null}
+          )
+        ) : (
+          <div className="grid h-80 place-items-center text-center">
+            Sorry, we could not find any animes that matched your search result.
+          </div>
+        )}
       </div>
     </div>
   );

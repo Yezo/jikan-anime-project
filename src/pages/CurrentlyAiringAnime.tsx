@@ -22,6 +22,7 @@ export const CurrentlyAiringAnime = () => {
       try {
         const data = await fetch(URL_PAGE_ONE);
         const resp = await data.json();
+
         const data2 = await fetch(URL_PAGE_TWO);
         const resp2 = await data2.json();
 
@@ -30,7 +31,6 @@ export const CurrentlyAiringAnime = () => {
 
         const test = [...resp.data, ...resp2.data, ...resp3.data];
         test && setAnimes(test);
-        console.log(test);
       } catch (error) {
         controller.signal.aborted && console.log("Aborted the fetch.");
       }
@@ -42,10 +42,10 @@ export const CurrentlyAiringAnime = () => {
   }, []);
 
   return (
-    <div className="container mx-auto bg-[#EDF1F5] py-10 px-6 pb-16 font-primary sm:px-12 sm:pb-8 lg:px-20 xl:px-40 2xl:px-52">
+    <div className="container mx-auto bg-primaryBG py-10 px-6 pb-16 font-primary sm:px-12 sm:pb-8 lg:px-20 xl:px-40 2xl:px-52">
       <Navbar />
       <div className="grid place-items-center pt-8">
-        <h2 className="text-2xl font-bold tracking-tighter text-darktext">
+        <h2 className="text-2xl font-bold tracking-tighter text-titleTEXT">
           Currently Airing
         </h2>
       </div>
