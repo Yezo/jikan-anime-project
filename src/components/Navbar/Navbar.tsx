@@ -13,9 +13,9 @@ export const Navbar = () => {
 
   return (
     <>
-      <nav className="container fixed bottom-0 z-40 grid grid-cols-4 place-items-center gap-2 border-t border-t-[#181818] bg-[#1D262F] p-3 text-sm font-semibold tracking-tight text-[#d3d3d3] shadow-2xl shadow-white sm:hidden">
+      {/* <nav className="container fixed bottom-0 z-40 grid grid-cols-4 place-items-center gap-2 border-t border-t-[#181818] bg-[#1D262F] p-3 text-sm font-semibold tracking-tight text-[#d3d3d3] shadow-2xl shadow-white sm:hidden">
         <Link to="/">
-          <div className="flex cursor-pointer flex-col items-center justify-center gap-1 hover:text-orange-500">
+          <div className="flex cursor-pointer flex-col items-center justify-center gap-1 hover:text-accent">
             <svg
               xmlns="http://www.w3.org/2000/svg"
               width="20"
@@ -79,15 +79,15 @@ export const Navbar = () => {
             <span>Random</span>
           </div>
         </Link>
-      </nav>
+      </nav> */}
 
-      <nav className="container hidden  border-b border-b-slate-300 px-10 py-3 text-sm font-semibold tracking-tight text-primary sm:flex sm:items-center sm:justify-between">
-        <h1 className="text-2xl font-bold tracking-tighter">
+      <nav className=" container flex flex-col items-center justify-center gap-4 border-b border-b-slate-300 px-6 pb-4 text-sm font-semibold tracking-tight text-primary sm:flex-row sm:justify-between">
+        <h1 className="text-2xl font-bold tracking-tighter hover:text-accent">
           <Link to="/">AniFlux</Link>
         </h1>
-        <div className="flex items-center gap-4 md:gap-10">
+        <div className="flex flex-wrap items-center justify-between gap-4 md:justify-center md:gap-10">
           <Link to="/">
-            <div className="flex cursor-pointer flex-col items-center justify-center gap-1 hover:underline">
+            <div className="flex cursor-pointer flex-col items-center justify-center  hover:text-accent">
               <svg
                 xmlns="http://www.w3.org/2000/svg"
                 width="20"
@@ -106,7 +106,7 @@ export const Navbar = () => {
             </div>
           </Link>
           <Link to="/anime/currently-airing">
-            <div className="flex flex-col items-center justify-center gap-1 hover:underline">
+            <div className="flex flex-col items-center justify-center gap-1 hover:text-accent">
               <svg
                 xmlns="http://www.w3.org/2000/svg"
                 width="20"
@@ -125,7 +125,7 @@ export const Navbar = () => {
             </div>
           </Link>
           <Link to="/anime/top">
-            <div className="flex flex-col items-center justify-center gap-1 hover:underline">
+            <div className="flex flex-col items-center justify-center gap-1 hover:text-accent">
               <svg
                 xmlns="http://www.w3.org/2000/svg"
                 width="20"
@@ -146,7 +146,7 @@ export const Navbar = () => {
           </Link>
 
           <div
-            className="flex cursor-pointer flex-col items-center justify-center gap-1 hover:underline"
+            className="flex cursor-pointer flex-col items-center justify-center gap-1 hover:text-accent"
             onClick={handleRefreshRandomAnimePage}
           >
             <svg

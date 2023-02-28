@@ -34,7 +34,7 @@ export const Top100AnimePage = () => {
   }, [pagination]);
 
   return (
-    <div className="container mx-auto bg-[#EDF1F5] py-10 pb-24 font-primary  sm:px-12 sm:pb-8 lg:px-20 xl:px-40 2xl:px-52">
+    <div className="container mx-auto bg-[#EDF1F5] px-6 py-10 pb-16 font-primary  sm:px-12 sm:pb-8 lg:px-20 xl:px-40 2xl:px-52">
       <Navbar />
       <div className="grid place-items-center pt-8">
         <h2 className="text-2xl font-bold tracking-tighter text-darktext">

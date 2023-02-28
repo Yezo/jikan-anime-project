@@ -61,7 +61,7 @@ export const IndividualAnimePage = () => {
   }, [characters]);
 
   return (
-    <div className="container mx-auto bg-[#EDF1F5] py-10 pb-24 font-primary text-light sm:px-12 sm:pb-8 lg:px-20 xl:px-40 2xl:px-52">
+    <div className="container mx-auto bg-[#EDF1F5] py-10 pb-16 font-primary text-light sm:px-12 sm:pb-8 lg:px-20 xl:px-40 2xl:px-52">
       <Navbar></Navbar>
       {!isLoading && anime && anime.data && characters && (
         <>
