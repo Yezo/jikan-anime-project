@@ -4,7 +4,6 @@ import { Navbar } from "../components/Navbar/Navbar";
 import { RootObject } from "../interfaces/interfaceTop100Anime";
 import {
   removeExtraDate,
-  truncateString,
   removeWrittenByMALRewrite,
 } from "../helpers/helperFunctions";
 export const Top100AnimePage = () => {
@@ -37,7 +36,7 @@ export const Top100AnimePage = () => {
     <div className="container mx-auto bg-primaryBG px-6 py-10 pb-16 font-primary  sm:px-12 sm:pb-8 lg:px-20 xl:px-40 2xl:px-52">
       <Navbar />
       <div className="grid place-items-center pt-8">
-        <h2 className="text-titleTEXT text-2xl font-bold tracking-tighter">
+        <h2 className="text-2xl font-bold tracking-tighter text-titleTEXT">
           Top 100 Anime
         </h2>
       </div>
@@ -60,11 +59,9 @@ export const Top100AnimePage = () => {
                   episodes={episodes}
                   aired={aired}
                   synopsis={synopsis}
-                  synopsisNum={200}
                   genres={genres}
                   removeExtraDate={removeExtraDate}
                   removeWrittenByMALRewrite={removeWrittenByMALRewrite}
-                  truncateString={truncateString}
                   key={mal_id}
                 ></AnimeCard>
               )
@@ -72,7 +69,7 @@ export const Top100AnimePage = () => {
           : null}
       </div>
 
-      <div className="mt-4 flex flex-col items-center justify-center text-sm font-semibold tracking-tight text-primary">
+      <div className="text-primary mt-4 flex flex-col items-center justify-center text-sm font-semibold tracking-tight">
         Page
         <ul className="flex gap-4">
           {pages.map((item) => (

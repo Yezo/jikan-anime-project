@@ -5,7 +5,6 @@ import { Searchbar } from "../components/Searchbar/Searchbar";
 import { RootObject } from "../interfaces/interfaceTop100Anime";
 import {
   removeExtraDate,
-  truncateString,
   removeWrittenByMALRewrite,
 } from "../helpers/helperFunctions";
 
@@ -52,11 +51,9 @@ export const HomePage = () => {
                   episodes={episodes}
                   aired={aired}
                   synopsis={synopsis}
-                  synopsisNum={1000}
                   genres={genres}
                   removeExtraDate={removeExtraDate}
                   removeWrittenByMALRewrite={removeWrittenByMALRewrite}
-                  truncateString={truncateString}
                   key={mal_id}
                 ></AnimeCard>
               )

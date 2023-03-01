@@ -4,7 +4,6 @@ import { Navbar } from "../components/Navbar/Navbar";
 import { RootObject } from "../interfaces/interfaceCurrentlyAiring";
 import {
   removeExtraDate,
-  truncateString,
   removeWrittenByMALRewrite,
 } from "../helpers/helperFunctions";
 export const CurrentlyAiringAnime = () => {
@@ -68,11 +67,9 @@ export const CurrentlyAiringAnime = () => {
                   episodes={episodes}
                   aired={aired}
                   synopsis={synopsis}
-                  synopsisNum={180}
                   genres={genres}
                   removeExtraDate={removeExtraDate}
                   removeWrittenByMALRewrite={removeWrittenByMALRewrite}
-                  truncateString={truncateString}
                   key={mal_id}
                 ></AnimeCard>
               )
