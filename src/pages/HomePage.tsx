@@ -32,6 +32,7 @@ export const HomePage = () => {
     <div className="container mx-auto bg-primaryBG py-10 px-6 pb-24 font-primary  sm:px-12 sm:pb-8 lg:px-20 xl:px-40 2xl:px-52">
       <Navbar />
       <Searchbar setQuery={setQuery} />
+
       <div className="mx-auto flex h-full w-full flex-wrap items-center justify-center gap-3 ">
         {animes && animes.data && animes.pagination.items.count > 0
           ? animes?.data.map(
@@ -51,7 +52,7 @@ export const HomePage = () => {
                   episodes={episodes}
                   aired={aired}
                   synopsis={synopsis}
-                  synopsisNum={200}
+                  synopsisNum={1000}
                   genres={genres}
                   removeExtraDate={removeExtraDate}
                   removeWrittenByMALRewrite={removeWrittenByMALRewrite}
