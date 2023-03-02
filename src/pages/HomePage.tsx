@@ -4,9 +4,6 @@ import { Navbar } from "../components/Navbar/Navbar"
 import { Searchbar } from "../components/Searchbar/Searchbar"
 import { RootObject } from "../interfaces/interfaceTop100Anime"
 import { removeExtraDate, removeWrittenByMALRewrite } from "../helpers/helperFunctions"
-import { TestSearchbar } from "../components/Searchbar/TestSearchbar"
-import * as ScrollArea from "@radix-ui/react-scroll-area"
-import { Link } from "react-router-dom"
 
 export const HomePage = () => {
   //States
@@ -23,7 +20,7 @@ export const HomePage = () => {
           .then((res) => setAnimes(res))
       }
     }, 750)
-
+    query.length === 0 && setAnimes(null)
     return () => clearTimeout(getData)
   }, [query])
 
