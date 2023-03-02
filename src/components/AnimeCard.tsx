@@ -1,19 +1,19 @@
-import { Genre, Aired } from "../interfaces/interfaceTop100Anime";
-import { Link } from "react-router-dom";
-import { useNavigate } from "react-router-dom";
-import { ScrollableDescriptionArea } from "./ScrollableDescription/ScrollableDescriptionArea";
+import { Genre, Aired } from "../interfaces/interfaceTop100Anime"
+import { Link } from "react-router-dom"
+import { useNavigate } from "react-router-dom"
+import { ScrollableDescriptionArea } from "./ScrollableDescription/ScrollableDescriptionArea"
 
 type Props = {
-  id: number;
-  imageURL: string;
-  title: string;
-  episodes?: number;
-  aired: Aired;
-  synopsis: string;
-  genres: Genre[];
-  removeExtraDate: (url: string) => string;
-  removeWrittenByMALRewrite: (url: string) => string;
-};
+  id: number
+  imageURL: string
+  title: string
+  episodes?: number
+  aired: Aired
+  synopsis: string
+  genres: Genre[]
+  removeExtraDate: (url: string) => string
+  removeWrittenByMALRewrite: (url: string) => string
+}
 
 export const AnimeCard = ({
   id,
@@ -27,10 +27,10 @@ export const AnimeCard = ({
   removeWrittenByMALRewrite,
 }: Props) => {
   //Navigate to a singular anime's page since you can't have an img element inside a Link element
-  const navigate = useNavigate();
+  const navigate = useNavigate()
   const move = (url: string) => {
-    return navigate(url);
-  };
+    return navigate(url)
+  }
 
   return (
     <div className="flex min-w-full flex-col rounded-md bg-[white] shadow-md ring-1 ring-black/[.05] sm:h-[275px] sm:flex-row lg:max-h-[275px] lg:min-h-[275px] xl:min-w-[33rem] xl:max-w-[33rem]">
@@ -74,5 +74,5 @@ export const AnimeCard = ({
         </footer>
       </div>
     </div>
-  );
-};
+  )
+}
