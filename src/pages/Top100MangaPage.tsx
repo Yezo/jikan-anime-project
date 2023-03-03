@@ -5,7 +5,7 @@ import { Navbar } from "../components/Navbar/Navbar"
 
 export const Top100MangaPage = () => {
   //States
-  const [animes, setAnimes] = useState<RootObject[] | null>(null)
+  const [mangas, setMangas] = useState<RootObject[] | null>(null)
 
   useEffect(() => {
     window.scrollTo(0, 0)
@@ -22,7 +22,7 @@ export const Top100MangaPage = () => {
         const resp3 = await data3.json()
 
         const total = [...resp.data, ...resp2.data, ...resp3.data]
-        setAnimes(total)
+        setMangas(total)
       } catch (error) {
         controller.signal.aborted && console.log("Aborted the fetch.")
       }
@@ -40,8 +40,8 @@ export const Top100MangaPage = () => {
         <h2 className="text-2xl font-bold tracking-tighter text-titleTEXT">Top Manga</h2>
       </div>
       <div className="mx-auto flex h-full w-full flex-wrap items-center justify-center gap-3 pt-8">
-        {animes
-          ? animes.map(({ mal_id, images, title, synopsis, genres, rank, popularity }, idx) => (
+        {mangas
+          ? mangas.map(({ mal_id, images, title, synopsis, genres, rank, popularity }, idx) => (
               <MangaCard
                 id={mal_id}
                 key={idx}

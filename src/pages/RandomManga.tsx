@@ -9,7 +9,7 @@ import { MangaCharacterCard } from "../components/MangaCharacterCard"
 export const RandomManga = () => {
   //States
   const [isLoading, setIsLoading] = useState(true)
-  const [anime, setAnime] = useState<RootObject | null>(null)
+  const [manga, setManga] = useState<RootObject | null>(null)
   const [characters, setCharacters] = useState<gObject | null>(null)
   const [error, setError] = useState(null)
   const [id, setID] = useState<number | undefined>(0)
@@ -23,7 +23,7 @@ export const RandomManga = () => {
       try {
         const data = await fetch(API_URL)
         const resp = await data.json()
-        setAnime(resp)
+        setManga(resp)
         setIsLoading(false)
       } catch (error) {
         controller.signal.aborted && console.log("Aborted the fetch.")
@@ -38,8 +38,8 @@ export const RandomManga = () => {
   }, [])
 
   useEffect(() => {
-    setID(anime?.data.mal_id)
-  }, [anime])
+    setID(manga?.data.mal_id)
+  }, [manga])
 
   //Fetch data
   useEffect(() => {
@@ -67,35 +67,35 @@ export const RandomManga = () => {
   return (
     <div className="container mx-auto bg-primaryBG py-10 pb-16 font-primary sm:px-12 sm:pb-8 lg:px-20 xl:px-40 2xl:px-52">
       <Navbar></Navbar>
-      {!isLoading && anime && anime.data && characters && (
+      {!isLoading && manga && manga.data && characters && (
         <>
           {/* //Header component */}
           <div className="z-10 lg:mb-4">
             <div className="lg:flex lg:pt-6">
               <img
-                src={anime.data.images.jpg.large_image_url}
-                alt={anime.data.title}
+                src={manga.data.images.jpg.large_image_url}
+                alt={manga.data.title}
                 className="max-h-60 w-full object-cover object-[center] shadow-sm ring-1 ring-titleTEXT/10 lg:min-h-[20rem] lg:min-w-[14rem] lg:max-w-[14rem] lg:rounded"
               ></img>
               <div className=" flex flex-col justify-between">
                 <div>
                   <h1 className="px-4 pt-5 text-3xl font-bold text-titleTEXT lg:pt-0">
-                    {anime.data.title}
+                    {manga.data.title}
                   </h1>
                   <div className="flex gap-2 px-4 py-2">
                     <div className="rounded-2xl bg-white px-4 py-1 text-xs font-semibold text-titleTEXT shadow-sm ring-1 ring-titleTEXT/10">
-                      Rank: #{anime.data.rank}
+                      Rank: #{manga.data.rank}
                     </div>
                     <div className="rounded-2xl bg-white px-4 py-1 text-xs font-semibold text-titleTEXT shadow-sm ring-1 ring-titleTEXT/10">
-                      Popularity: #{anime.data.popularity}
+                      Popularity: #{manga.data.popularity}
                     </div>
                   </div>
                 </div>
-                {anime.data.synopsis ? (
+                {manga.data.synopsis ? (
                   <div className="flex flex-col gap-1 px-4 lg:pr-0 lg:pb-0 ">
                     <h3 className="font-bold text-titleTEXT">Description</h3>
                     <p className=" rounded bg-white p-5 text-[0.85rem] leading-6 text-normalTEXT shadow-sm ring-1 ring-titleTEXT/10">
-                      {removeWrittenByMALRewrite(anime.data.synopsis)}
+                      {removeWrittenByMALRewrite(manga.data.synopsis)}
                     </p>
                   </div>
                 ) : (
@@ -110,21 +110,21 @@ export const RandomManga = () => {
             <div className="gap- flex flex-col gap-1">
               <h3 className="font-bold text-titleTEXT">Details</h3>
               <div className="grid grid-cols-2 gap-y-4 rounded bg-white p-4 tracking-normal text-normalTEXT shadow-sm ring-1 ring-titleTEXT/10 lg:min-w-[14rem] lg:max-w-[14rem] lg:grid-cols-1 lg:self-center lg:rounded lg:p-5">
-                {anime.data.type && (
+                {manga.data.type && (
                   <AnimeDetail title="Format">
-                    <span>{anime.data.type}</span>
+                    <span>{manga.data.type}</span>
                   </AnimeDetail>
                 )}
 
-                {anime.data.status && (
+                {manga.data.status && (
                   <AnimeDetail title="Status">
-                    <span>{anime.data.status}</span>
+                    <span>{manga.data.status}</span>
                   </AnimeDetail>
                 )}
 
-                {anime.data.chapters ? (
+                {manga.data.chapters ? (
                   <AnimeDetail title="Chapters">
-                    <span>{anime.data.chapters}</span>
+                    <span>{manga.data.chapters}</span>
                   </AnimeDetail>
                 ) : (
                   <AnimeDetail title="Chapters">
@@ -132,9 +132,9 @@ export const RandomManga = () => {
                   </AnimeDetail>
                 )}
 
-                {anime.data.volumes ? (
+                {manga.data.volumes ? (
                   <AnimeDetail title="Volumes">
-                    <span>{anime.data.volumes}</span>
+                    <span>{manga.data.volumes}</span>
                   </AnimeDetail>
                 ) : (
                   <AnimeDetail title="Volumes">
@@ -142,80 +142,80 @@ export const RandomManga = () => {
                   </AnimeDetail>
                 )}
 
-                {anime.data.published.string && (
+                {manga.data.published.string && (
                   <AnimeDetail title="Published On">
-                    <span>{anime.data.published.string}</span>
+                    <span>{manga.data.published.string}</span>
                   </AnimeDetail>
                 )}
-                {!isEmpty(anime.data.authors) && (
+                {!isEmpty(manga.data.authors) && (
                   <AnimeDetail title="Authors">
-                    {anime.data.authors.map((item) => (
+                    {manga.data.authors.map((item) => (
                       <div key={item.name}>{item.name}</div>
                     ))}
                   </AnimeDetail>
                 )}
 
-                {anime.data.score && (
+                {manga.data.score && (
                   <AnimeDetail title="Score">
-                    <span>{anime.data.score}</span>
+                    <span>{manga.data.score}</span>
                   </AnimeDetail>
                 )}
 
-                {anime.data.scored_by && (
+                {manga.data.scored_by && (
                   <AnimeDetail title="Scored by">
-                    <span>{formatNums.format(anime.data.scored_by)} users</span>
+                    <span>{formatNums.format(manga.data.scored_by)} users</span>
                   </AnimeDetail>
                 )}
 
-                {anime.data.members && (
+                {manga.data.members && (
                   <AnimeDetail title="Members">
-                    <span>{formatNums.format(anime.data.members)}</span>
+                    <span>{formatNums.format(manga.data.members)}</span>
                   </AnimeDetail>
                 )}
 
-                {!isEmpty(anime.data.favorites) && (
+                {!isEmpty(manga.data.favorites) && (
                   <AnimeDetail title="Favorites">
-                    <span>{formatNums.format(anime.data.favorites)}</span>
+                    <span>{formatNums.format(manga.data.favorites)}</span>
                   </AnimeDetail>
                 )}
 
-                {!isEmpty(anime.data.demographics) && (
+                {!isEmpty(manga.data.demographics) && (
                   <AnimeDetail title="Demographic">
-                    {anime.data.demographics.map((item) => (
+                    {manga.data.demographics.map((item) => (
                       <div key={item.name}>{item.name}</div>
                     ))}
                   </AnimeDetail>
                 )}
 
-                {anime.data.title && (
+                {manga.data.title && (
                   <AnimeDetail title="Romaji">
-                    <span>{anime.data.title}</span>
+                    <span>{manga.data.title}</span>
                   </AnimeDetail>
                 )}
 
-                {anime.data.title_english && (
+                {manga.data.title_english && (
                   <AnimeDetail title="English">
-                    <span>{anime.data.title_english}</span>
+                    <span>{manga.data.title_english}</span>
                   </AnimeDetail>
                 )}
 
-                {anime.data.title_japanese && (
+                {manga.data.title_japanese && (
                   <AnimeDetail title="Japanese">
-                    <span>{anime.data.title_japanese}</span>
+                    <span>{manga.data.title_japanese}</span>
                   </AnimeDetail>
                 )}
 
-                {!isEmpty(anime.data.genres) && (
+                {!isEmpty(manga.data.genres) && (
                   <AnimeDetail title="Genres">
-                    {anime.data.genres.map((item) => (
+                    {manga.data.genres.map((item) => (
                       <div key={item.name}>{item.name}</div>
                     ))}
                   </AnimeDetail>
                 )}
 
-                {!isEmpty(anime.data.themes) && (
+                {!isEmpty(manga.data.themes) && (
                   <AnimeDetail title="Themes">
-                    {anime.data.themes.map((item) => (
+                    {manga.data.themes.map((item) => (
                       <div key={item.name}>{item.name}</div>
                     ))}
                   </AnimeDetail>
