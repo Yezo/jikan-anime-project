@@ -1,10 +1,11 @@
 type Props = {
-  setQuery: React.Dispatch<React.SetStateAction<string>>;
-};
+  setQuery: React.Dispatch<React.SetStateAction<string>>
+}
 
 export const Searchbar = ({ setQuery }: Props) => {
   return (
     <div className="grid place-items-center py-8">
+      <h2 className="mb-2 text-sm font-semibold tracking-tight">Search</h2>
       <form>
         <label htmlFor="searchbar">
           <input
@@ -17,5 +18,5 @@ export const Searchbar = ({ setQuery }: Props) => {
         </label>
       </form>
     </div>
-  );
-};
+  )
+}
