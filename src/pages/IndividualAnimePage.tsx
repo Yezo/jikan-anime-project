@@ -1,64 +1,58 @@
-import { useState, useEffect } from "react";
-import { useParams } from "react-router-dom";
-import { CharacterCard } from "../components/IndividualAnime/CharacterCard";
-import { RootObject } from "../interfaces/interfaceSingularAnime";
-import { Datum, gObject } from "../interfaces/interfaceAnimeCharacters";
-import { AnimeDetail } from "../components/IndividualAnime/AnimeDetail";
-import { Navbar } from "../components/Navbar/Navbar";
-import {
-  removeWrittenByMALRewrite,
-  isEmpty,
-  formatNums,
-} from "../helpers/helperFunctions";
+import { useState, useEffect } from "react"
+import { useParams } from "react-router-dom"
+import { CharacterCard } from "../components/IndividualAnime/CharacterCard"
+import { RootObject } from "../interfaces/anime/interfaceSingularAnime"
+import { Datum, gObject } from "../interfaces/anime/interfaceAnimeCharacters"
+import { AnimeDetail } from "../components/IndividualAnime/AnimeDetail"
+import { Navbar } from "../components/Navbar/Navbar"
+import { removeWrittenByMALRewrite, isEmpty, formatNums } from "../helpers/helperFunctions"
 
 export const IndividualAnimePage = () => {
   //States
-  const { animeId } = useParams();
-  const [isLoading, setIsLoading] = useState(true);
-  const [anime, setAnime] = useState<RootObject | null>(null);
-  const [characters, setCharacters] = useState<gObject | null>(null);
-  const [error, setError] = useState(null);
+  const { animeId } = useParams()
+  const [isLoading, setIsLoading] = useState(true)
+  const [anime, setAnime] = useState<RootObject | null>(null)
+  const [characters, setCharacters] = useState<gObject | null>(null)
+  const [error, setError] = useState(null)
 
   //Constants
-  const API_URL = `https://api.jikan.moe/v4/anime/${animeId}`;
+  const API_URL = `https://api.jikan.moe/v4/anime/${animeId}`
 
   //Fetch data
   useEffect(() => {
-    const controller = new AbortController();
+    const controller = new AbortController()
     const fetchAPI = async () => {
       try {
-        const data = await fetch(API_URL);
-        const resp = await data.json();
-        setAnime(resp);
-        setIsLoading(false);
+        const data = await fetch(API_URL)
+        const resp = await data.json()
+        setAnime(resp)
+        setIsLoading(false)
       } catch (error) {
-        controller.signal.aborted && console.log("Aborted the fetch.");
+        controller.signal.aborted && console.log("Aborted the fetch.")
       }
-    };
+    }
 
     const fetchCharacters = async (id: string) => {
       try {
-        const data = await fetch(
-          `https://api.jikan.moe/v4/anime/${id}/characters`
-        );
-        const resp = await data.json();
-        setCharacters(resp);
-        setIsLoading(false);
+        const data = await fetch(`https://api.jikan.moe/v4/anime/${id}/characters`)
+        const resp = await data.json()
+        setCharacters(resp)
+        setIsLoading(false)
       } catch (error) {
-        controller.signal.aborted && console.log("Aborted the fetch.");
+        controller.signal.aborted && console.log("Aborted the fetch.")
       }
-    };
+    }
 
-    animeId && fetchAPI();
-    animeId && fetchCharacters(animeId);
+    animeId && fetchAPI()
+    animeId && fetchCharacters(animeId)
     return () => {
-      controller.abort();
-    };
-  }, []);
+      controller.abort()
+    }
+  }, [])
 
   useEffect(() => {
-    setError(characters?.status);
-  }, [characters]);
+    setError(characters?.status)
+  }, [characters])
 
   return (
     <div className="container mx-auto bg-primaryBG py-10 pb-16 font-primary sm:px-12 sm:pb-8 lg:px-20 xl:px-40 2xl:px-52">
@@ -232,9 +226,7 @@ export const IndividualAnimePage = () => {
                   {characters &&
                     characters.data &&
                     characters.data
-                      .sort((a: Datum, b: Datum) =>
-                        a.favorites < b.favorites ? 1 : -1
-                      )
+                      .sort((a: Datum, b: Datum) => (a.favorites < b.favorites ? 1 : -1))
                       .slice(0, 12)
                       .map(({ character, role, voice_actors }) => (
                         <CharacterCard
@@ -252,5 +244,5 @@ export const IndividualAnimePage = () => {
         </>
       )}
     </div>
-  );
-};
+  )
+}

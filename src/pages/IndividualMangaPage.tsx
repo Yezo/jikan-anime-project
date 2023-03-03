@@ -1,20 +1,22 @@
-import { useEffect, useState } from "react"
-import { AnimeDetail } from "../components/IndividualAnime/AnimeDetail"
-import { CharacterCard } from "../components/IndividualAnime/CharacterCard"
-import { Navbar } from "../components/Navbar/Navbar"
-import { RootObject } from "../interfaces/anime/interfaceRandomAnime"
+import { useState, useEffect } from "react"
+import { useParams } from "react-router-dom"
+import { RootObject } from "../interfaces/manga/interfaceIndividualManga"
 import { Datum, gObject } from "../interfaces/anime/interfaceAnimeCharacters"
-import { removeWrittenByMALRewrite, formatNums } from "../helpers/helperFunctions"
+import { AnimeDetail } from "../components/IndividualAnime/AnimeDetail"
+import { Navbar } from "../components/Navbar/Navbar"
+import { removeWrittenByMALRewrite, isEmpty, formatNums } from "../helpers/helperFunctions"
+import { MangaCharacterCard } from "../components/MangaCharacterCard"
 
-export const RandomAnime = () => {
+export const IndividualMangaPage = () => {
   //States
-  const [anime, setAnime] = useState<RootObject | null>(null)
+  const { mangaId } = useParams()
   const [isLoading, setIsLoading] = useState(true)
+  const [anime, setAnime] = useState<RootObject | null>(null)
   const [characters, setCharacters] = useState<gObject | null>(null)
-  const [id, setID] = useState<number | undefined>(0)
   const [error, setError] = useState(null)
+
   //Constants
-  const API_URL = `https://api.jikan.moe/v4/random/anime`
+  const API_URL = `https://api.jikan.moe/v4/manga/${mangaId}`
 
   //Fetch data
   useEffect(() => {
@@ -30,41 +32,28 @@ export const RandomAnime = () => {
       }
     }
 
-    fetchAPI()
+    const fetchCharacters = async (id: string) => {
+      try {
+        const data = await fetch(`https://api.jikan.moe/v4/manga/${id}/characters`)
+        const resp = await data.json()
+        setCharacters(resp)
+        setIsLoading(false)
+      } catch (error) {
+        controller.signal.aborted && console.log("Aborted the fetch.")
+      }
+    }
 
+    mangaId && fetchAPI()
+    mangaId && fetchCharacters(mangaId)
     return () => {
       controller.abort()
     }
   }, [])
 
   useEffect(() => {
-    setID(anime?.data.mal_id)
-  }, [anime])
-
-  //Fetch data
-  useEffect(() => {
-    const controller = new AbortController()
-    const fetchCharacters = async () => {
-      try {
-        const data = await fetch(`https://api.jikan.moe/v4/anime/${id}/characters`)
-        const resp = await data.json()
-        setCharacters(resp)
-        setIsLoading(false)
-      } catch (error) {
-        console.log("Aborted the fetch.")
-      }
-    }
-    fetchCharacters()
-    return () => {
-      controller.abort()
-    }
-  }, [id])
-
-  useEffect(() => {
     setError(characters?.status)
   }, [characters])
 
-  const isEmpty = (arr: unknown) => Array.isArray(arr) && !arr.length
   return (
     <div className="container mx-auto bg-primaryBG py-10 pb-16 font-primary sm:px-12 sm:pb-8 lg:px-20 xl:px-40 2xl:px-52">
       <Navbar></Navbar>
@@ -100,11 +89,8 @@ export const RandomAnime = () => {
                     </p>
                   </div>
                 ) : (
-                  <div className="flex flex-col gap-1 px-4 lg:pr-0 lg:pb-0 ">
-                    <h3 className="font-bold text-titleTEXT">Description</h3>
-                    <p className=" rounded bg-white p-5 text-[0.85rem] leading-6 text-normalTEXT shadow-sm ring-1 ring-titleTEXT/10">
-                      There is no sypnopsis for this anime yet.
-                    </p>
+                  <div className="rounded bg-white  p-5 text-normalTEXT lg:pr-0 lg:pb-0">
+                    There is no synopsis for this manga.
                   </div>
                 )}
               </div>
@@ -126,35 +112,36 @@ export const RandomAnime = () => {
                   </AnimeDetail>
                 )}
 
-                {anime.data.episodes && (
-                  <AnimeDetail title="Episodes">
-                    <span>{anime.data.episodes}</span>
+                {anime.data.chapters ? (
+                  <AnimeDetail title="Chapters">
+                    <span>{anime.data.chapters}</span>
+                  </AnimeDetail>
+                ) : (
+                  <AnimeDetail title="Chapters">
+                    <span>Unknown</span>
                   </AnimeDetail>
                 )}
 
-                {anime.data.duration && (
-                  <AnimeDetail title="Episode Duration">
-                    <span>{anime.data.duration}</span>
+                {anime.data.volumes ? (
+                  <AnimeDetail title="Volumes">
+                    <span>{anime.data.volumes}</span>
+                  </AnimeDetail>
+                ) : (
+                  <AnimeDetail title="Volumes">
+                    <span>Unknown</span>
                   </AnimeDetail>
                 )}
 
-                {anime.data.aired.from && (
-                  <AnimeDetail title="Start Date">
-                    <span>{String(anime.data.aired.from).slice(0, 10)}</span>
+                {anime.data.published.string && (
+                  <AnimeDetail title="Published On">
+                    <span>{anime.data.published.string}</span>
                   </AnimeDetail>
                 )}
-
-                {anime.data.season && anime.data.year && (
-                  <AnimeDetail title="Season">
-                    <span className="capitalize">
-                      {anime.data.season} {anime.data.year}
-                    </span>
-                  </AnimeDetail>
-                )}
-
-                {anime.data.aired.to && (
-                  <AnimeDetail title="End Date">
-                    <span>{String(anime.data.aired.to).slice(0, 10)}</span>
+                {!isEmpty(anime.data.authors) && (
+                  <AnimeDetail title="Authors">
+                    {anime.data.authors.map((item) => (
+                      <div key={item.name}>{item.name}</div>
+                    ))}
                   </AnimeDetail>
                 )}
 
@@ -179,14 +166,6 @@ export const RandomAnime = () => {
                 {!isEmpty(anime.data.favorites) && (
                   <AnimeDetail title="Favorites">
                     <span>{formatNums.format(anime.data.favorites)}</span>
-                  </AnimeDetail>
-                )}
-
-                {!isEmpty(anime.data.studios) && (
-                  <AnimeDetail title="Studio">
-                    {anime.data.studios.map((item) => (
-                      <span key={item.name}>{item.name}</span>
-                    ))}
                   </AnimeDetail>
                 )}
 
@@ -216,17 +195,17 @@ export const RandomAnime = () => {
                   </AnimeDetail>
                 )}
 
-                {!isEmpty(anime.data.producers) && (
-                  <AnimeDetail title="Producers">
-                    {anime.data.producers.map((item) => (
+                {!isEmpty(anime.data.genres) && (
+                  <AnimeDetail title="Genres">
+                    {anime.data.genres.map((item) => (
                       <div key={item.name}>{item.name}</div>
                     ))}
                   </AnimeDetail>
                 )}
 
-                {!isEmpty(anime.data.genres) && (
-                  <AnimeDetail title="Genres">
-                    {anime.data.genres.map((item) => (
+                {!isEmpty(anime.data.themes) && (
+                  <AnimeDetail title="Themes">
+                    {anime.data.themes.map((item) => (
                       <div key={item.name}>{item.name}</div>
                     ))}
                   </AnimeDetail>
@@ -242,14 +221,13 @@ export const RandomAnime = () => {
                     characters.data
                       .sort((a: Datum, b: Datum) => (a.favorites < b.favorites ? 1 : -1))
                       .slice(0, 12)
-                      .map(({ character, role, voice_actors }) => (
-                        <CharacterCard
+                      .map(({ character, role }) => (
+                        <MangaCharacterCard
                           characterName={character.name}
                           characterImage={character.images.jpg.image_url}
                           characterRole={role}
-                          voiceActor={voice_actors}
                           key={character.name}
-                        ></CharacterCard>
+                        ></MangaCharacterCard>
                       ))}
                 </div>
               </div>

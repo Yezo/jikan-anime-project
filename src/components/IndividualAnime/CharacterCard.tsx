@@ -1,20 +1,18 @@
-import { VoiceActor } from "../../interfaces/interfaceAnimeCharacters";
+import { VoiceActor } from "../../interfaces/anime/interfaceAnimeCharacters"
 
 type Props = {
-  characterName: string;
-  characterImage?: string;
-  characterRole?: string;
-  voiceActor: VoiceActor[];
-};
+  characterName: string
+  characterImage?: string
+  characterRole?: string
+  voiceActor: VoiceActor[]
+}
 export const CharacterCard = ({
   characterName,
   characterImage,
   characterRole,
   voiceActor,
 }: Props) => {
-  const japaneseVoiceActor = voiceActor.filter(
-    (item) => item.language === "Japanese"
-  );
+  const japaneseVoiceActor = voiceActor.filter((item) => item.language === "Japanese")
 
   return (
     <div
@@ -53,5 +51,5 @@ export const CharacterCard = ({
         </div>
       </div>
     </div>
-  );
-};
+  )
+}

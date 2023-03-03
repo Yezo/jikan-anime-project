@@ -1,7 +1,7 @@
 import { useState, useEffect } from "react"
 import { AnimeCard } from "../components/AnimeCard"
 import { Navbar } from "../components/Navbar/Navbar"
-import { RootObject } from "../interfaces/interfaceCurrentlyAiring"
+import { RootObject } from "../interfaces/anime/interfaceCurrentlyAiring"
 import { removeExtraDate, removeWrittenByMALRewrite } from "../helpers/helperFunctions"
 
 export const CurrentlyAiringAnime = () => {
