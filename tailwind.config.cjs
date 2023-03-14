@@ -1,6 +1,6 @@
 /** @type {import('tailwindcss').Config} */
 // eslint-disable-next-line no-undef, @typescript-eslint/no-var-requires
-const plugin = require('tailwindcss/plugin');
+const plugin = require("tailwindcss/plugin")
 module.exports = {
   content: ["./index.html", "./src/**/*.{js,ts,jsx,tsx}"],
   theme: {
@@ -15,6 +15,22 @@ module.exports = {
         accent: "#3480EA", //blue
       },
       keyframes: {
+        slideDownAndFade: {
+          from: { opacity: 0, transform: "translateY(-2px)" },
+          to: { opacity: 1, transform: "translateY(0)" },
+        },
+        slideLeftAndFade: {
+          from: { opacity: 0, transform: "translateX(2px)" },
+          to: { opacity: 1, transform: "translateX(0)" },
+        },
+        slideUpAndFade: {
+          from: { opacity: 0, transform: "translateY(2px)" },
+          to: { opacity: 1, transform: "translateY(0)" },
+        },
+        slideRightAndFade: {
+          from: { opacity: 0, transform: "translateX(2px)" },
+          to: { opacity: 1, transform: "translateX(0)" },
+        },
         enterFromRight: {
           from: { opacity: 0, transform: "translateX(200px)" },
           to: { opacity: 1, transform: "translateX(0)" },
@@ -48,16 +64,6 @@ module.exports = {
           to: { opacity: 0 },
         },
       },
-    },
-    animation: {
-      scaleIn: "scaleIn 200ms ease",
-      scaleOut: "scaleOut 200ms ease",
-      fadeIn: "fadeIn 200ms ease",
-      fadeOut: "fadeOut 200ms ease",
-      enterFromLeft: "enterFromLeft 250ms ease",
-      enterFromRight: "enterFromRight 250ms ease",
-      exitToLeft: "exitToLeft 250ms ease",
-      exitToRight: "exitToRight 250ms ease",
     },
   },
   plugins: [
