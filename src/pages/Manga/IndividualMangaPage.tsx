@@ -1,20 +1,26 @@
 import { useState, useEffect } from "react"
-import { RootObject } from "../interfaces/manga/interfaceIndividualManga"
-import { Datum, gObject } from "../interfaces/anime/interfaceAnimeCharacters"
-import { AnimeDetail } from "../components/IndividualAnime/AnimeDetail"
-import { Navbar } from "../components/Navbar/Navbar"
-import { removeWrittenByMALRewrite, isEmpty, formatNums } from "../helpers/helperFunctions"
-import { MangaCharacterCard } from "../components/MangaCharacterCard"
+import { useParams } from "react-router-dom"
+import { RootObject } from "../../interfaces/manga/interfaceIndividualManga"
+import { Datum, gObject } from "../../interfaces/anime/interfaceAnimeCharacters"
+import { AnimeDetail } from "../../components/IndividualAnime/AnimeDetail"
+import { Navbar } from "../../components/Navbar/Navbar"
+import { removeWrittenByMALRewrite, isEmpty, formatNums } from "../../helpers/helperFunctions"
+import { MangaCharacterCard } from "../../components/MangaCharacterCard"
+import { ErrorMessage } from "../../components/Messages/ErrorMessage"
+import { LoadingMessage } from "../../components/Messages/LoadingMessage"
 
-export const RandomManga = () => {
+export const IndividualMangaPage = () => {
   //States
-  const [isLoading, setIsLoading] = useState(true)
+  const { mangaId } = useParams()
   const [manga, setManga] = useState<RootObject | null>(null)
   const [characters, setCharacters] = useState<gObject | null>(null)
-  const [error, setError] = useState(null)
-  const [id, setID] = useState<number | undefined>(0)
+
+  const [isLoading, setIsLoading] = useState<boolean>(true)
+  const [isError, setIsError] = useState<boolean>(false)
+  const [isCharacterError, setIsCharacterError] = useState<boolean>(false)
+
   //Constants
-  const API_URL = `https://api.jikan.moe/v4/random/manga`
+  const API_URL = `https://api.jikan.moe/v4/manga/${mangaId}`
 
   //Fetch data
   useEffect(() => {
@@ -24,50 +30,41 @@ export const RandomManga = () => {
         const data = await fetch(API_URL)
         const resp = await data.json()
         setManga(resp)
-        setIsLoading(false)
       } catch (error) {
-        controller.signal.aborted && console.log("Aborted the fetch.")
+        controller.signal.aborted ? console.log("Aborted the fetch") : setIsError(true)
+      } finally {
+        setIsLoading(false)
       }
     }
 
-    fetchAPI()
+    const fetchCharacters = async (id: string) => {
+      try {
+        const data = await fetch(`https://api.jikan.moe/v4/manga/${id}/characters`)
+        const resp = await data.json()
+        setCharacters(resp)
+      } catch (error) {
+        controller.signal.aborted ? console.log("Aborted the fetch") : setIsCharacterError(true)
+      }
+    }
 
+    mangaId && fetchAPI()
+    mangaId && fetchCharacters(mangaId)
     return () => {
       controller.abort()
     }
   }, [])
 
   useEffect(() => {
-    setID(manga?.data.mal_id)
-  }, [manga])
-
-  //Fetch data
-  useEffect(() => {
-    const controller = new AbortController()
-    const fetchCharacters = async () => {
-      try {
-        const data = await fetch(`https://api.jikan.moe/v4/manga/${id}/characters`)
-        const resp = await data.json()
-        setCharacters(resp)
-        setIsLoading(false)
-      } catch (error) {
-        console.log("Aborted the fetch.")
-      }
-    }
-    fetchCharacters()
-    return () => {
-      controller.abort()
-    }
-  }, [id])
-
-  useEffect(() => {
-    setError(characters?.status)
+    setIsCharacterError(characters?.status)
   }, [characters])
 
   return (
     <div className="container mx-auto bg-primaryBG py-10 pb-16 font-primary sm:px-12 sm:pb-8 lg:px-20 xl:px-40 2xl:px-52">
       <Navbar></Navbar>
-      {!isLoading && manga && manga.data && characters && (
+
+      {isLoading && <LoadingMessage />}
+      {isError && <ErrorMessage />}
+      {!isError && !isLoading && manga && manga.data && characters ? (
         <>
           {/* //Header component */}
           <div className="z-10 lg:mb-4">
@@ -94,13 +91,16 @@ export const RandomManga = () => {
                 {manga.data.synopsis ? (
                   <div className="flex flex-col gap-1 px-4 lg:pr-0 lg:pb-0 ">
                     <h3 className="font-bold text-titleTEXT">Description</h3>
-                    <p className=" rounded bg-white p-5 text-[0.85rem] leading-6 text-normalTEXT shadow-sm ring-1 ring-titleTEXT/10">
+                    <p className="rounded bg-white p-5 text-[0.85rem] leading-6 text-normalTEXT shadow-sm ring-1 ring-titleTEXT/10">
                       {removeWrittenByMALRewrite(manga.data.synopsis)}
                     </p>
                   </div>
                 ) : (
-                  <div className="rounded bg-white  p-5 text-normalTEXT lg:pr-0 lg:pb-0">
-                    There is no synopsis for this manga.
+                  <div className="flex flex-col gap-1 px-4 lg:pr-0 lg:pb-0 ">
+                    <h3 className="font-bold text-titleTEXT">Description</h3>
+                    <p className="rounded bg-white p-5 text-[0.85rem] leading-6 text-normalTEXT shadow-sm ring-1 ring-titleTEXT/10">
+                      A synopsis could not be found for this manga.
+                    </p>
                   </div>
                 )}
               </div>
@@ -222,9 +222,10 @@ export const RandomManga = () => {
                 )}
               </div>
             </div>
-            {characters && !isEmpty(characters.data) && (
-              <div className="flex w-full flex-col gap-1 ">
-                {!error && <h3 className="font-bold text-titleTEXT">Cast</h3>}
+
+            <div className="flex w-full flex-col gap-1 ">
+              <h3 className="font-bold text-titleTEXT">Cast</h3>
+              {characters && !isEmpty(characters.data) && (
                 <div className="grid grid-cols-1 gap-2 md:grid-cols-2 ">
                   {characters &&
                     characters.data &&
@@ -240,11 +241,18 @@ export const RandomManga = () => {
                         ></MangaCharacterCard>
                       ))}
                 </div>
-              </div>
-            )}
+              )}
+              {isCharacterError && (
+                <div className="h-fit w-full rounded bg-white p-5 text-[0.85rem] leading-6 text-normalTEXT shadow-sm ring-1 ring-titleTEXT/10">
+                  {typeof characters.status === "string" || typeof characters.status === "number"
+                    ? "Character data could not be displayed due to API rate-limiting."
+                    : "No data could be be found."}
+                </div>
+              )}
+            </div>
           </div>
         </>
-      )}
+      ) : null}
     </div>
   )
 }

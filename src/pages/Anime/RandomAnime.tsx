@@ -1,22 +1,24 @@
-import { useState, useEffect } from "react"
-import { useParams } from "react-router-dom"
-import { CharacterCard } from "../components/IndividualAnime/CharacterCard"
-import { RootObject } from "../interfaces/anime/interfaceSingularAnime"
-import { Datum, gObject } from "../interfaces/anime/interfaceAnimeCharacters"
-import { AnimeDetail } from "../components/IndividualAnime/AnimeDetail"
-import { Navbar } from "../components/Navbar/Navbar"
-import { removeWrittenByMALRewrite, isEmpty, formatNums } from "../helpers/helperFunctions"
+import { useEffect, useState } from "react"
+import { AnimeDetail } from "../../components/IndividualAnime/AnimeDetail"
+import { CharacterCard } from "../../components/IndividualAnime/CharacterCard"
+import { Navbar } from "../../components/Navbar/Navbar"
+import { RootObject } from "../../interfaces/anime/interfaceRandomAnime"
+import { Datum, gObject } from "../../interfaces/anime/interfaceAnimeCharacters"
+import { removeWrittenByMALRewrite, formatNums } from "../../helpers/helperFunctions"
+import { LoadingMessage } from "../../components/Messages/LoadingMessage"
+import { ErrorMessage } from "../../components/Messages/ErrorMessage"
 
-export const IndividualAnimePage = () => {
+export const RandomAnime = () => {
   //States
-  const { animeId } = useParams()
-  const [isLoading, setIsLoading] = useState(true)
   const [anime, setAnime] = useState<RootObject | null>(null)
   const [characters, setCharacters] = useState<gObject | null>(null)
-  const [error, setError] = useState(null)
+  const [id, setID] = useState<number | undefined>(0)
 
+  const [isLoading, setIsLoading] = useState<boolean>(true)
+  const [isError, setIsError] = useState<boolean>(false)
+  const [isCharacterError, setIsCharacterError] = useState<boolean>(false)
   //Constants
-  const API_URL = `https://api.jikan.moe/v4/anime/${animeId}`
+  const API_URL = `https://api.jikan.moe/v4/random/anime`
 
   //Fetch data
   useEffect(() => {
@@ -26,38 +28,53 @@ export const IndividualAnimePage = () => {
         const data = await fetch(API_URL)
         const resp = await data.json()
         setAnime(resp)
-        setIsLoading(false)
       } catch (error) {
-        controller.signal.aborted && console.log("Aborted the fetch.")
+        controller.signal.aborted ? console.log("Aborted the fetch") : setIsError(true)
+      } finally {
+        setIsLoading(false)
       }
     }
-
-    const fetchCharacters = async (id: string) => {
-      try {
-        const data = await fetch(`https://api.jikan.moe/v4/anime/${id}/characters`)
-        const resp = await data.json()
-        setCharacters(resp)
-        setIsLoading(false)
-      } catch (error) {
-        controller.signal.aborted && console.log("Aborted the fetch.")
-      }
-    }
-
-    animeId && fetchAPI()
-    animeId && fetchCharacters(animeId)
+    fetchAPI()
     return () => {
       controller.abort()
     }
   }, [])
 
   useEffect(() => {
-    setError(characters?.status)
+    setID(anime?.data.mal_id)
+  }, [anime])
+
+  //Fetch data
+  useEffect(() => {
+    const controller = new AbortController()
+    const fetchCharacters = async () => {
+      try {
+        const data = await fetch(`https://api.jikan.moe/v4/anime/${id}/characters`)
+        const resp = await data.json()
+        setCharacters(resp)
+      } catch (error) {
+        controller.signal.aborted ? console.log("Aborted the fetch") : setIsCharacterError(true)
+      }
+    }
+    fetchCharacters()
+    return () => {
+      controller.abort()
+    }
+  }, [id])
+
+  useEffect(() => {
+    setIsCharacterError(characters?.status)
   }, [characters])
+
+  const isEmpty = (arr: unknown) => Array.isArray(arr) && !arr.length
 
   return (
     <div className="container mx-auto bg-primaryBG py-10 pb-16 font-primary sm:px-12 sm:pb-8 lg:px-20 xl:px-40 2xl:px-52">
       <Navbar></Navbar>
-      {!isLoading && anime && anime.data && characters && (
+
+      {isLoading && <LoadingMessage />}
+      {isError && <ErrorMessage />}
+      {!isError && !isLoading && anime && anime.data && characters ? (
         <>
           {/* //Header component */}
           <div className="z-10 lg:mb-4">
@@ -84,13 +101,16 @@ export const IndividualAnimePage = () => {
                 {anime.data.synopsis ? (
                   <div className="flex flex-col gap-1 px-4 lg:pr-0 lg:pb-0 ">
                     <h3 className="font-bold text-titleTEXT">Description</h3>
-                    <p className=" rounded bg-white p-5 text-[0.85rem] leading-6 text-normalTEXT shadow-sm ring-1 ring-titleTEXT/10">
+                    <p className="rounded bg-white p-5 text-[0.85rem] leading-6 text-normalTEXT shadow-sm ring-1 ring-titleTEXT/10">
                       {removeWrittenByMALRewrite(anime.data.synopsis)}
                     </p>
                   </div>
                 ) : (
-                  <div className="rounded bg-white  p-5 text-normalTEXT lg:pr-0 lg:pb-0">
-                    There is no synopsis for this anime.
+                  <div className="flex flex-col gap-1 px-4 lg:pr-0 lg:pb-0 ">
+                    <h3 className="font-bold text-titleTEXT">Description</h3>
+                    <p className="rounded bg-white p-5 text-[0.85rem] leading-6 text-normalTEXT shadow-sm ring-1 ring-titleTEXT/10">
+                      A synopsis could not be found for this anime.
+                    </p>
                   </div>
                 )}
               </div>
@@ -219,9 +239,10 @@ export const IndividualAnimePage = () => {
                 )}
               </div>
             </div>
-            {characters && !isEmpty(characters.data) && (
-              <div className="flex w-full flex-col gap-1 ">
-                {!error && <h3 className="font-bold text-titleTEXT">Cast</h3>}
+
+            <div className="flex w-full flex-col gap-1 ">
+              <h3 className="font-bold text-titleTEXT">Cast</h3>
+              {characters && !isEmpty(characters.data) && (
                 <div className="grid grid-cols-1 gap-2 md:grid-cols-2 ">
                   {characters &&
                     characters.data &&
@@ -238,11 +259,18 @@ export const IndividualAnimePage = () => {
                         ></CharacterCard>
                       ))}
                 </div>
-              </div>
-            )}
+              )}
+              {isCharacterError && (
+                <div className="h-fit w-full rounded bg-white p-5 text-[0.85rem] leading-6 text-normalTEXT shadow-sm ring-1 ring-titleTEXT/10">
+                  {typeof characters.status === "string" || typeof characters.status === "number"
+                    ? "Character data could not be displayed due to API rate-limiting or resource was not found."
+                    : "No data could be be found."}
+                </div>
+              )}
+            </div>
           </div>
         </>
-      )}
+      ) : null}
     </div>
   )
 }

@@ -1,20 +1,26 @@
-import { useEffect, useState } from "react"
-import { AnimeDetail } from "../components/IndividualAnime/AnimeDetail"
-import { CharacterCard } from "../components/IndividualAnime/CharacterCard"
-import { Navbar } from "../components/Navbar/Navbar"
-import { RootObject } from "../interfaces/anime/interfaceRandomAnime"
-import { Datum, gObject } from "../interfaces/anime/interfaceAnimeCharacters"
-import { removeWrittenByMALRewrite, formatNums } from "../helpers/helperFunctions"
+import { useState, useEffect } from "react"
+import { useParams } from "react-router-dom"
+import { CharacterCard } from "../../components/IndividualAnime/CharacterCard"
+import { RootObject } from "../../interfaces/anime/interfaceSingularAnime"
+import { Datum, gObject } from "../../interfaces/anime/interfaceAnimeCharacters"
+import { AnimeDetail } from "../../components/IndividualAnime/AnimeDetail"
+import { Navbar } from "../../components/Navbar/Navbar"
+import { removeWrittenByMALRewrite, isEmpty, formatNums } from "../../helpers/helperFunctions"
+import { LoadingMessage } from "../../components/Messages/LoadingMessage"
+import { ErrorMessage } from "../../components/Messages/ErrorMessage"
 
-export const RandomAnime = () => {
+export const IndividualAnimePage = () => {
   //States
+  const { animeId } = useParams()
   const [anime, setAnime] = useState<RootObject | null>(null)
-  const [isLoading, setIsLoading] = useState(true)
   const [characters, setCharacters] = useState<gObject | null>(null)
-  const [id, setID] = useState<number | undefined>(0)
-  const [error, setError] = useState(null)
+
+  const [isLoading, setIsLoading] = useState<boolean>(true)
+  const [isError, setIsError] = useState<boolean>(false)
+  const [isCharacterError, setIsCharacterError] = useState<boolean>(false)
+
   //Constants
-  const API_URL = `https://api.jikan.moe/v4/random/anime`
+  const API_URL = `https://api.jikan.moe/v4/anime/${animeId}`
 
   //Fetch data
   useEffect(() => {
@@ -24,51 +30,40 @@ export const RandomAnime = () => {
         const data = await fetch(API_URL)
         const resp = await data.json()
         setAnime(resp)
-        setIsLoading(false)
       } catch (error) {
-        controller.signal.aborted && console.log("Aborted the fetch.")
+        controller.signal.aborted ? console.log("Aborted the fetch") : setIsError(true)
+      } finally {
+        setIsLoading(false)
       }
     }
 
-    fetchAPI()
+    const fetchCharacters = async (id: string) => {
+      try {
+        const data = await fetch(`https://api.jikan.moe/v4/anime/${id}/characters`)
+        const resp = await data.json()
+        setCharacters(resp)
+      } catch (error) {
+        controller.signal.aborted ? console.log("Aborted the fetch") : setIsCharacterError(true)
+      }
+    }
 
+    animeId && fetchAPI()
+    animeId && fetchCharacters(animeId)
     return () => {
       controller.abort()
     }
   }, [])
 
   useEffect(() => {
-    setID(anime?.data.mal_id)
-  }, [anime])
-
-  //Fetch data
-  useEffect(() => {
-    const controller = new AbortController()
-    const fetchCharacters = async () => {
-      try {
-        const data = await fetch(`https://api.jikan.moe/v4/anime/${id}/characters`)
-        const resp = await data.json()
-        setCharacters(resp)
-        setIsLoading(false)
-      } catch (error) {
-        console.log("Aborted the fetch.")
-      }
-    }
-    fetchCharacters()
-    return () => {
-      controller.abort()
-    }
-  }, [id])
-
-  useEffect(() => {
-    setError(characters?.status)
+    setIsCharacterError(characters?.status)
   }, [characters])
 
-  const isEmpty = (arr: unknown) => Array.isArray(arr) && !arr.length
   return (
     <div className="container mx-auto bg-primaryBG py-10 pb-16 font-primary sm:px-12 sm:pb-8 lg:px-20 xl:px-40 2xl:px-52">
       <Navbar></Navbar>
-      {!isLoading && anime && anime.data && characters && (
+      {isLoading && <LoadingMessage />}
+      {isError && <ErrorMessage />}
+      {!isError && !isLoading && anime && anime.data && characters ? (
         <>
           {/* //Header component */}
           <div className="z-10 lg:mb-4">
@@ -95,15 +90,15 @@ export const RandomAnime = () => {
                 {anime.data.synopsis ? (
                   <div className="flex flex-col gap-1 px-4 lg:pr-0 lg:pb-0 ">
                     <h3 className="font-bold text-titleTEXT">Description</h3>
-                    <p className=" rounded bg-white p-5 text-[0.85rem] leading-6 text-normalTEXT shadow-sm ring-1 ring-titleTEXT/10">
+                    <p className="rounded bg-white p-5 text-[0.85rem] leading-6 text-normalTEXT shadow-sm ring-1 ring-titleTEXT/10">
                       {removeWrittenByMALRewrite(anime.data.synopsis)}
                     </p>
                   </div>
                 ) : (
                   <div className="flex flex-col gap-1 px-4 lg:pr-0 lg:pb-0 ">
                     <h3 className="font-bold text-titleTEXT">Description</h3>
-                    <p className=" rounded bg-white p-5 text-[0.85rem] leading-6 text-normalTEXT shadow-sm ring-1 ring-titleTEXT/10">
-                      There is no sypnopsis for this anime yet.
+                    <p className="rounded bg-white p-5 text-[0.85rem] leading-6 text-normalTEXT shadow-sm ring-1 ring-titleTEXT/10">
+                      A synopsis could not be found for this anime.
                     </p>
                   </div>
                 )}
@@ -233,9 +228,10 @@ export const RandomAnime = () => {
                 )}
               </div>
             </div>
-            {characters && !isEmpty(characters.data) && (
-              <div className="flex w-full flex-col gap-1 ">
-                {!error && <h3 className="font-bold text-titleTEXT">Cast</h3>}
+
+            <div className="flex w-full flex-col gap-1 ">
+              <h3 className="font-bold text-titleTEXT">Cast</h3>
+              {characters && !isEmpty(characters.data) && (
                 <div className="grid grid-cols-1 gap-2 md:grid-cols-2 ">
                   {characters &&
                     characters.data &&
@@ -252,11 +248,18 @@ export const RandomAnime = () => {
                         ></CharacterCard>
                       ))}
                 </div>
-              </div>
-            )}
+              )}
+              {isCharacterError && (
+                <div className="h-fit w-full rounded bg-white p-5 text-[0.85rem] leading-6 text-normalTEXT shadow-sm ring-1 ring-titleTEXT/10">
+                  {typeof characters.status === "string" || typeof characters.status === "number"
+                    ? "Character data could not be displayed due to API rate-limiting."
+                    : "No data could be be found."}
+                </div>
+              )}
+            </div>
           </div>
         </>
-      )}
+      ) : null}
     </div>
   )
 }
