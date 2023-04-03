@@ -7,7 +7,7 @@ export const HomePage = () => {
       <div className="flex flex-col gap-10 pt-8 lg:flex-row-reverse lg:pt-12">
         <div className="basis-1/2">
           <img
-            src="/japan.png"
+            src="/japan.webp"
             alt="Photo of Japan"
             className="max-h-[30rem] rounded-lg shadow-md ring-1 ring-black/[.45]"
           />
