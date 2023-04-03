@@ -68,8 +68,6 @@ export const CurrentlyAiringAnime = () => {
                     aired={aired}
                     synopsis={synopsis}
                     genres={genres}
-                    removeExtraDate={removeExtraDate}
-                    removeWrittenByMALRewrite={removeWrittenByMALRewrite}
                     key={mal_id}
                   ></AnimeCard>
                 ))

@@ -2,6 +2,7 @@ import { Genre, Aired } from "../interfaces/anime/interfaceTop100Anime"
 import { Link } from "react-router-dom"
 import { useNavigate } from "react-router-dom"
 import { ScrollableDescriptionArea } from "./ScrollableDescription/ScrollableDescriptionArea"
+import { removeExtraDate, removeWrittenByMALRewrite } from "../helpers/helperFunctions"
 
 type Props = {
   id: number
@@ -11,21 +12,9 @@ type Props = {
   aired: Aired
   synopsis: string
   genres: Genre[]
-  removeExtraDate: (url: string) => string
-  removeWrittenByMALRewrite: (url: string) => string
 }
 
-export const AnimeCard = ({
-  id,
-  imageURL,
-  title,
-  episodes,
-  aired,
-  synopsis,
-  genres,
-  removeExtraDate,
-  removeWrittenByMALRewrite,
-}: Props) => {
+export const AnimeCard = ({ id, imageURL, title, episodes, aired, synopsis, genres }: Props) => {
   //Navigate to a singular anime's page since you can't have an img element inside a Link element
   const navigate = useNavigate()
   const move = (url: string) => {

@@ -2,7 +2,6 @@ import { useState, useEffect } from "react"
 import { AnimeCard } from "../../components/AnimeCard"
 import { Navbar } from "../../components/Navbar/Navbar"
 import { RootObject } from "../../interfaces/anime/interfaceTop100Anime"
-import { removeExtraDate, removeWrittenByMALRewrite } from "../../helpers/helperFunctions"
 import { ErrorMessage } from "../../components/Messages/ErrorMessage"
 import { LoadingMessage } from "../../components/Messages/LoadingMessage"
 export const Top100AnimePage = () => {
@@ -58,8 +57,6 @@ export const Top100AnimePage = () => {
                     aired={aired}
                     synopsis={synopsis}
                     genres={genres}
-                    removeExtraDate={removeExtraDate}
-                    removeWrittenByMALRewrite={removeWrittenByMALRewrite}
                     key={mal_id}
                   ></AnimeCard>
                 ))

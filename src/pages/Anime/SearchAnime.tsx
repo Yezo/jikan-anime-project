@@ -3,7 +3,6 @@ import { AnimeCard } from "../../components/AnimeCard"
 import { Navbar } from "../../components/Navbar/Navbar"
 import { Searchbar } from "../../components/Searchbar/Searchbar"
 import { RootObject } from "../../interfaces/anime/interfaceTop100Anime"
-import { removeExtraDate, removeWrittenByMALRewrite } from "../../helpers/helperFunctions"
 
 export const SearchAnime = () => {
   //States
@@ -40,8 +39,6 @@ export const SearchAnime = () => {
                 aired={aired}
                 synopsis={synopsis}
                 genres={genres}
-                removeExtraDate={removeExtraDate}
-                removeWrittenByMALRewrite={removeWrittenByMALRewrite}
                 key={mal_id}
               ></AnimeCard>
             ))
