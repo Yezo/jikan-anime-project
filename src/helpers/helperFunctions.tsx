@@ -1,10 +1,10 @@
 //Helper functions
 export function removeExtraDate(url: string) {
-  return url && url.split("to")[0].replace(/\s*$/, "");
+  return url && url.split("to")[0].replace(/\s*$/, "")
 }
 
 export function removeWrittenByMALRewrite(url: string) {
-  return url && url.split("[Written by MAL Rewrite]")[0].replace(/\s*$/, "");
+  return url && url.split("[Written by MAL Rewrite]")[0].replace(/\s*$/, "")
 }
 
 // export function truncateString(str: string, num: number) {
@@ -21,6 +21,6 @@ export function removeWrittenByMALRewrite(url: string) {
 export const formatNums = new Intl.NumberFormat("en-US", {
   currency: "USD",
   minimumFractionDigits: 0,
-});
+})
 
-export const isEmpty = (arr: unknown) => Array.isArray(arr) && !arr.length;
+export const isEmpty = (arr: unknown) => Array.isArray(arr) && !arr.length

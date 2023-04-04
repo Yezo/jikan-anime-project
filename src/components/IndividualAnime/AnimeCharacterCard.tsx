@@ -1,4 +1,4 @@
-import { VoiceActor } from "../../interfaces/anime/interfaceAnimeCharacters"
+import { VoiceActor } from "../../interfaces/anime/ISingleCharacter"
 
 type Props = {
   characterName: string
@@ -6,7 +6,7 @@ type Props = {
   characterRole?: string
   voiceActor: VoiceActor[]
 }
-export const CharacterCard = ({
+export const AnimeCharacterCard = ({
   characterName,
   characterImage,
   characterRole,
@@ -23,7 +23,7 @@ export const CharacterCard = ({
         <img
           src={characterImage}
           alt={characterName}
-          className="h-auto w-14 rounded-l object-cover object-center ring-1 ring-titleTEXT/10"
+          className="min-h-[80px] w-14 rounded-l object-cover object-center ring-1 ring-titleTEXT/10"
         ></img>
         <div className="flex flex-col justify-between p-2 text-xs text-titleTEXT ">
           <span className="font-semibold">{characterName}</span>
@@ -38,7 +38,7 @@ export const CharacterCard = ({
           <img
             src={japaneseVoiceActor[0].person.images.jpg.image_url}
             alt={characterName}
-            className="h-auto w-14 rounded-r object-cover object-center ring-1 ring-titleTEXT/10"
+            className="min-h-[80px] w-14 rounded-r object-cover object-center ring-1 ring-titleTEXT/10"
           ></img>
         )}
         <div className="flex flex-col items-end justify-between p-2 text-xs ">

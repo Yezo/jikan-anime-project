@@ -1,60 +1,64 @@
-import { useState, useEffect } from "react"
+//Imports - Hooks
+import { useState } from "react"
+
+//Imports - Components
 import { Navbar } from "../../components/Navbar/Navbar"
+import { ErrorMessage } from "../../components/Messages/ErrorMessage"
+import { LoadingMessage } from "../../components/Messages/LoadingMessage"
+
+//Imports - Redux
 import { Searchbar } from "../../components/Searchbar/Searchbar"
-import { RootObject } from "../../interfaces/anime/interfaceTop100Anime"
-import { MangaCard } from "../../components/MangaCard"
+import { useDebounce } from "../../hooks/useDebounce"
+import { MangaCard } from "../../components/IndividualManga/MangaCard"
+import { useGetSearchMangaQuery } from "../../redux/manga"
 
 export const SearchManga = () => {
   //States
-  const [mangas, setMangas] = useState<RootObject | null>(null)
   const [query, setQuery] = useState<string>("")
-
-  //Constants
-  const API_URL = `https://api.jikan.moe/v4/manga?q=${query}`
-
-  useEffect(() => {
-    //Debounce the search query to help mitigate 429 API errors
-    const getData = setTimeout(() => {
-      if (query.length > 0) {
-        fetch(API_URL)
-          .then((res) => res.json())
-          .then((res) => setMangas(res))
-      }
-    }, 750)
-    query.length === 0 && setMangas(null)
-    return () => clearTimeout(getData)
-  }, [query])
+  const debouncedSearchQuery = useDebounce(query, 1000)
+  const {
+    data: mangas,
+    error,
+    isLoading,
+  } = useGetSearchMangaQuery(debouncedSearchQuery, { skip: query == "" })
 
   return (
-    <div className="container mx-auto bg-primaryBG py-10 px-6 pb-24 font-primary  sm:px-12 sm:pb-8 lg:px-20 xl:px-40 2xl:px-52">
+    <div className="container mx-auto bg-primaryBG py-10 px-6 pb-16 font-primary sm:px-12 sm:pb-8 lg:px-20 xl:px-40 2xl:px-52">
       <Navbar />
       <Searchbar setQuery={setQuery} type="Manga" />
-
-      <div className="mx-auto flex h-full w-full flex-wrap items-center justify-center gap-3 ">
-        {mangas && mangas.data && mangas.pagination.items.count > 0
-          ? mangas?.data.map(
-              ({ mal_id, images, title, rank, popularity, synopsis, genres }, idx) => (
-                <MangaCard
-                  id={mal_id}
-                  key={idx}
-                  title={title}
-                  synopsis={synopsis}
-                  genres={genres}
-                  imageURL={images.jpg.image_url}
-                  rank={rank}
-                  popularity={popularity}
-                />
-              )
-            )
-          : null}
-
-        {mangas && mangas?.pagination.items.count === 0 && (
-          <div className="flex h-80 flex-col items-center justify-center gap-2 text-center text-titleTEXT">
-            <HammerSVG />
-            Sorry, we could not find any manga that matched your search result.
+      {error ? (
+        <ErrorMessage />
+      ) : isLoading ? (
+        <LoadingMessage />
+      ) : mangas ? (
+        <>
+          <div className="mx-auto flex h-full w-full flex-wrap items-center justify-center gap-3 pt-8">
+            {mangas && mangas
+              ? mangas.data.map(
+                  ({ mal_id, images, title, rank, popularity, synopsis, genres }, idx) => (
+                    <MangaCard
+                      id={mal_id}
+                      key={idx}
+                      title={title}
+                      synopsis={synopsis}
+                      genres={genres}
+                      imageURL={images.jpg.image_url}
+                      rank={rank}
+                      popularity={popularity}
+                    />
+                  )
+                )
+              : null}
           </div>
-        )}
-      </div>
+        </>
+      ) : null}
+
+      {mangas && mangas?.pagination.items.count === 0 && (
+        <div className="flex h-80 flex-col items-center justify-center gap-2 text-center text-titleTEXT">
+          <HammerSVG />
+          Sorry, we could not find any manga that matched your search result.
+        </div>
+      )}
     </div>
   )
 }

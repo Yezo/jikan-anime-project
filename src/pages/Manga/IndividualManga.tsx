@@ -1,70 +1,30 @@
-import { useState, useEffect } from "react"
+//Imports - Hooks
 import { useParams } from "react-router-dom"
-import { RootObject } from "../../interfaces/manga/interfaceIndividualManga"
-import { Datum, gObject } from "../../interfaces/anime/interfaceAnimeCharacters"
-import { AnimeDetail } from "../../components/IndividualAnime/AnimeDetail"
+//Imports - Components
 import { Navbar } from "../../components/Navbar/Navbar"
-import { removeWrittenByMALRewrite, isEmpty, formatNums } from "../../helpers/helperFunctions"
-import { MangaCharacterCard } from "../../components/MangaCharacterCard"
 import { ErrorMessage } from "../../components/Messages/ErrorMessage"
 import { LoadingMessage } from "../../components/Messages/LoadingMessage"
 
-export const IndividualMangaPage = () => {
+//Imports - Redux
+import { AnimeDetail } from "../../components/IndividualAnime/AnimeDetail"
+import { formatNums, isEmpty, removeWrittenByMALRewrite } from "../../helpers/helperFunctions"
+import { useGetMangaQuery, useGetMangaCharactersQuery } from "../../redux/manga"
+import { MangaCharacterCard } from "../../components/IndividualManga/MangaCharacterCard"
+
+export const IndividualManga = () => {
   //States
   const { mangaId } = useParams()
-  const [manga, setManga] = useState<RootObject | null>(null)
-  const [characters, setCharacters] = useState<gObject | null>(null)
-
-  const [isLoading, setIsLoading] = useState<boolean>(true)
-  const [isError, setIsError] = useState<boolean>(false)
-  const [isCharacterError, setIsCharacterError] = useState<boolean>(false)
-
-  //Constants
-  const API_URL = `https://api.jikan.moe/v4/manga/${mangaId}`
-
-  //Fetch data
-  useEffect(() => {
-    const controller = new AbortController()
-    const fetchAPI = async () => {
-      try {
-        const data = await fetch(API_URL)
-        const resp = await data.json()
-        setManga(resp)
-      } catch (error) {
-        controller.signal.aborted ? console.log("Aborted the fetch") : setIsError(true)
-      } finally {
-        setIsLoading(false)
-      }
-    }
-
-    const fetchCharacters = async (id: string) => {
-      try {
-        const data = await fetch(`https://api.jikan.moe/v4/manga/${id}/characters`)
-        const resp = await data.json()
-        setCharacters(resp)
-      } catch (error) {
-        controller.signal.aborted ? console.log("Aborted the fetch") : setIsCharacterError(true)
-      }
-    }
-
-    mangaId && fetchAPI()
-    mangaId && fetchCharacters(mangaId)
-    return () => {
-      controller.abort()
-    }
-  }, [])
-
-  useEffect(() => {
-    setIsCharacterError(characters?.status)
-  }, [characters])
+  const { data: manga, error, isLoading } = useGetMangaQuery(mangaId as string)
+  const { data: characters } = useGetMangaCharactersQuery(mangaId as string)
 
   return (
-    <div className="container mx-auto bg-primaryBG py-10 pb-16 font-primary sm:px-12 sm:pb-8 lg:px-20 xl:px-40 2xl:px-52">
-      <Navbar></Navbar>
-
-      {isLoading && <LoadingMessage />}
-      {isError && <ErrorMessage />}
-      {!isError && !isLoading && manga && manga.data && characters ? (
+    <div className="container mx-auto bg-primaryBG py-10 px-6 pb-16 font-primary sm:px-12 sm:pb-8 lg:px-20 xl:px-40 2xl:px-52">
+      <Navbar />
+      {error ? (
+        <ErrorMessage />
+      ) : isLoading ? (
+        <LoadingMessage />
+      ) : manga ? (
         <>
           {/* //Header component */}
           <div className="z-10 lg:mb-4">
@@ -99,7 +59,7 @@ export const IndividualMangaPage = () => {
                   <div className="flex flex-col gap-1 px-4 lg:pr-0 lg:pb-0 ">
                     <h3 className="font-bold text-titleTEXT">Description</h3>
                     <p className="rounded bg-white p-5 text-[0.85rem] leading-6 text-normalTEXT shadow-sm ring-1 ring-titleTEXT/10">
-                      A synopsis could not be found for this manga.
+                      A synopsis could not be found for this anime.
                     </p>
                   </div>
                 )}
@@ -225,12 +185,11 @@ export const IndividualMangaPage = () => {
 
             <div className="flex w-full flex-col gap-1 ">
               <h3 className="font-bold text-titleTEXT">Cast</h3>
-              {characters && !isEmpty(characters.data) && (
+              {characters && (
                 <div className="grid grid-cols-1 gap-2 md:grid-cols-2 ">
                   {characters &&
                     characters.data &&
                     characters.data
-                      .sort((a: Datum, b: Datum) => (a.favorites < b.favorites ? 1 : -1))
                       .slice(0, 12)
                       .map(({ character, role }) => (
                         <MangaCharacterCard
@@ -240,13 +199,6 @@ export const IndividualMangaPage = () => {
                           key={character.name}
                         ></MangaCharacterCard>
                       ))}
-                </div>
-              )}
-              {isCharacterError && (
-                <div className="h-fit w-full rounded bg-white p-5 text-[0.85rem] leading-6 text-normalTEXT shadow-sm ring-1 ring-titleTEXT/10">
-                  {typeof characters.status === "string" || typeof characters.status === "number"
-                    ? "Character data could not be displayed due to API rate-limiting."
-                    : "No data could be be found."}
                 </div>
               )}
             </div>

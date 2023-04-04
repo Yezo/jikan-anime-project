@@ -13,7 +13,7 @@ export const MangaCharacterCard = ({ characterName, characterImage, characterRol
         <img
           src={characterImage}
           alt={characterName}
-          className="h-auto w-14 rounded-l object-cover object-center ring-1 ring-titleTEXT/10"
+          className="min-h-[80px] w-14 rounded-l object-cover object-center ring-1 ring-titleTEXT/10"
         ></img>
         <div className="flex flex-col justify-between p-2 text-xs text-titleTEXT ">
           <span className="font-semibold">{characterName}</span>
