@@ -1,4 +1,4 @@
-interface Props {
+type Props = {
   title: string
   children?: string | number | React.ReactNode
 }

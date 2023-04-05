@@ -1,10 +1,7 @@
 import { ISingleAnime, Demographic } from "../../interfaces/anime/ISingleAnime"
 import { AnimeDetailRow } from "./AnimeDetailRow"
-type Props = {
-  animes: ISingleAnime
-}
 
-export const AnimeDetailAside = ({ animes }: Props) => {
+export const AnimeDetailAside = ({ animes }: { animes: ISingleAnime }) => {
   //Destructure from props to make it more readable
   const { data } = animes
   const {
