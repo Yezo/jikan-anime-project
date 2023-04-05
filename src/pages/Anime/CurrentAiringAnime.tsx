@@ -16,25 +16,6 @@ export const CurrentAiringAnime = () => {
   const [page, setPage] = useState(1)
   const { data: animes, error, isLoading } = useGetCurrentlyAiringAnimeQuery(page)
 
-  //Helper functions
-  const handleNextPagination = () => {
-    const hasNextPage = animes?.pagination.has_next_page
-    if (page >= 1 && hasNextPage) {
-      setPage(page + 1)
-      window.scrollTo(0, 0)
-    } else return
-  }
-
-  const handlePreviousPagination = () => {
-    const currentPage = animes?.pagination.current_page
-    if (page > 1) {
-      setPage(page - 1)
-      window.scrollTo(0, 0)
-    }
-    if (page === 1 || currentPage === 1) return
-    else return
-  }
-
   return (
     <div className="container mx-auto bg-primaryBG py-10 px-6 pb-16 font-primary sm:px-12 sm:pb-8 lg:px-20 xl:px-40 2xl:px-52">
       <Navbar />
@@ -63,12 +44,7 @@ export const CurrentAiringAnime = () => {
                 ))
               : null}
           </div>
-          <Pagination
-            handleNextPagination={handleNextPagination}
-            handlePreviousPagination={handlePreviousPagination}
-            current={animes?.pagination.current_page}
-            max={animes?.pagination.last_visible_page}
-          ></Pagination>
+          <Pagination data={animes.pagination} page={page} setPage={setPage}></Pagination>
         </>
       ) : null}
     </div>

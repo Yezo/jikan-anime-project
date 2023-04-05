@@ -16,25 +16,6 @@ export const TopManga = () => {
   const [page, setPage] = useState(1)
   const { data: mangas, error, isLoading } = useGetTopMangaQuery(page)
 
-  //Helper functions
-  const handleNextPagination = () => {
-    const hasNextPage = mangas?.pagination.has_next_page
-    if (page >= 1 && hasNextPage) {
-      setPage(page + 1)
-      window.scrollTo(0, 0)
-    } else return
-  }
-
-  const handlePreviousPagination = () => {
-    const currentPage = mangas?.pagination.current_page
-    if (page > 1) {
-      setPage(page - 1)
-      window.scrollTo(0, 0)
-    }
-    if (page === 1 || currentPage === 1) return
-    else return
-  }
-
   return (
     <div className="container mx-auto bg-primaryBG py-10 px-6 pb-16 font-primary sm:px-12 sm:pb-8 lg:px-20 xl:px-40 2xl:px-52">
       <Navbar />
@@ -65,12 +46,7 @@ export const TopManga = () => {
                 )
               : null}
           </div>
-          <Pagination
-            handleNextPagination={handleNextPagination}
-            handlePreviousPagination={handlePreviousPagination}
-            current={mangas?.pagination.current_page}
-            max={mangas?.pagination.last_visible_page}
-          ></Pagination>
+          <Pagination data={mangas.pagination} page={page} setPage={setPage}></Pagination>
         </>
       ) : null}
     </div>
