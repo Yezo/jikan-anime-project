@@ -71,7 +71,6 @@ export const TopAnime = () => {
           ></Pagination>
         </>
       ) : null}
-      =
     </div>
   )
 }
