@@ -1,15 +1,15 @@
 //Imports - Hooks
 import { useState } from "react"
+import { useDebounce } from "../../hooks/useDebounce"
 
 //Imports - Components
 import { Navbar } from "../../components/Navbar/Navbar"
 import { ErrorMessage } from "../../components/Messages/ErrorMessage"
 import { LoadingMessage } from "../../components/Messages/LoadingMessage"
+import { Searchbar } from "../../components/Searchbar/Searchbar"
+import { MangaCard } from "../../components/IndividualManga/MangaCard"
 
 //Imports - Redux
-import { Searchbar } from "../../components/Searchbar/Searchbar"
-import { useDebounce } from "../../hooks/useDebounce"
-import { MangaCard } from "../../components/IndividualManga/MangaCard"
 import { useGetSearchMangaQuery } from "../../redux/manga"
 
 export const SearchManga = () => {

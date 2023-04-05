@@ -5,11 +5,11 @@ import { useState } from "react"
 import { Navbar } from "../../components/Navbar/Navbar"
 import { ErrorMessage } from "../../components/Messages/ErrorMessage"
 import { LoadingMessage } from "../../components/Messages/LoadingMessage"
+import { MangaCard } from "../../components/IndividualManga/MangaCard"
+import { Pagination } from "../../components/Pagination/Pagination"
 
 //Imports - Redux
-import { Pagination } from "../../components/Pagination/Pagination"
 import { useGetTopMangaQuery } from "../../redux/manga"
-import { MangaCard } from "../../components/IndividualManga/MangaCard"
 
 export const TopManga = () => {
   //States
