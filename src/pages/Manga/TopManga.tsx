@@ -65,15 +65,14 @@ export const TopManga = () => {
                 )
               : null}
           </div>
+          <Pagination
+            handleNextPagination={handleNextPagination}
+            handlePreviousPagination={handlePreviousPagination}
+            current={mangas?.pagination.current_page}
+            max={mangas?.pagination.last_visible_page}
+          ></Pagination>
         </>
       ) : null}
-
-      <Pagination
-        handleNextPagination={handleNextPagination}
-        handlePreviousPagination={handlePreviousPagination}
-        current={mangas?.pagination.current_page}
-        max={mangas?.pagination.last_visible_page}
-      ></Pagination>
     </div>
   )
 }

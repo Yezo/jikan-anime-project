@@ -6,10 +6,10 @@ import { Navbar } from "../../components/Navbar/Navbar"
 import { AnimeCard } from "../../components/IndividualAnime/AnimeCard"
 import { ErrorMessage } from "../../components/Messages/ErrorMessage"
 import { LoadingMessage } from "../../components/Messages/LoadingMessage"
+import { Pagination } from "../../components/Pagination/Pagination"
 
 //Imports - Redux
 import { useGetCurrentlyAiringAnimeQuery } from "../../redux/anime"
-import { Pagination } from "../../components/Pagination/Pagination"
 
 export const CurrentAiringAnime = () => {
   //States
@@ -48,7 +48,7 @@ export const CurrentAiringAnime = () => {
             <h2 className="text-2xl font-bold tracking-tighter text-titleTEXT">Currently Airing</h2>
           </div>
           <div className="mx-auto flex h-full w-full flex-wrap items-center justify-center gap-3 pt-8">
-            {animes && animes
+            {animes && animes.data
               ? animes.data.map(({ mal_id, images, title, episodes, aired, synopsis, genres }) => (
                   <AnimeCard
                     id={mal_id}
@@ -63,15 +63,14 @@ export const CurrentAiringAnime = () => {
                 ))
               : null}
           </div>
+          <Pagination
+            handleNextPagination={handleNextPagination}
+            handlePreviousPagination={handlePreviousPagination}
+            current={animes?.pagination.current_page}
+            max={animes?.pagination.last_visible_page}
+          ></Pagination>
         </>
       ) : null}
-
-      <Pagination
-        handleNextPagination={handleNextPagination}
-        handlePreviousPagination={handlePreviousPagination}
-        current={animes?.pagination.current_page}
-        max={animes?.pagination.last_visible_page}
-      ></Pagination>
     </div>
   )
 }

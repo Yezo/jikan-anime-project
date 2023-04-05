@@ -15,20 +15,20 @@ export interface Data {
   title_synonyms: any[]
   type: string
   source: string
-  episodes: null
+  episodes: number
   status: string
   airing: boolean
   aired: Aired
   duration: string
   rating: string
-  score: null
-  scored_by: null
-  rank: null
+  score: number
+  scored_by: number
+  rank: number
   popularity: number
   members: number
   favorites: number
   synopsis: string
-  background: null
+  background: string
   season: string
   year: number
   broadcast: Broadcast
@@ -43,7 +43,7 @@ export interface Data {
 
 export interface Aired {
   from: Date
-  to: null
+  to: Date
   prop: Prop
   string: string
 }

@@ -6,10 +6,10 @@ import { Navbar } from "../../components/Navbar/Navbar"
 import { AnimeCard } from "../../components/IndividualAnime/AnimeCard"
 import { ErrorMessage } from "../../components/Messages/ErrorMessage"
 import { LoadingMessage } from "../../components/Messages/LoadingMessage"
+import { Pagination } from "../../components/Pagination/Pagination"
 
 //Imports - Redux
 import { useGetTopAnimeQuery } from "../../redux/anime"
-import { Pagination } from "../../components/Pagination/Pagination"
 
 export const TopAnime = () => {
   //States
@@ -63,15 +63,15 @@ export const TopAnime = () => {
                 ))
               : null}
           </div>
+          <Pagination
+            handleNextPagination={handleNextPagination}
+            handlePreviousPagination={handlePreviousPagination}
+            current={animes?.pagination.current_page}
+            max={animes?.pagination.last_visible_page}
+          ></Pagination>
         </>
       ) : null}
-
-      <Pagination
-        handleNextPagination={handleNextPagination}
-        handlePreviousPagination={handlePreviousPagination}
-        current={animes?.pagination.current_page}
-        max={animes?.pagination.last_visible_page}
-      ></Pagination>
+      =
     </div>
   )
 }

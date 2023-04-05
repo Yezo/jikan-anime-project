@@ -1,16 +1,16 @@
 //Imports - Hooks
 import { useState } from "react"
+import { useDebounce } from "../../hooks/useDebounce"
 
 //Imports - Components
 import { Navbar } from "../../components/Navbar/Navbar"
 import { AnimeCard } from "../../components/IndividualAnime/AnimeCard"
 import { ErrorMessage } from "../../components/Messages/ErrorMessage"
 import { LoadingMessage } from "../../components/Messages/LoadingMessage"
+import { Searchbar } from "../../components/Searchbar/Searchbar"
 
 //Imports - Redux
 import { useGetSearchAnimeQuery } from "../../redux/anime"
-import { Searchbar } from "../../components/Searchbar/Searchbar"
-import { useDebounce } from "../../hooks/useDebounce"
 
 export const SearchAnime = () => {
   //States
