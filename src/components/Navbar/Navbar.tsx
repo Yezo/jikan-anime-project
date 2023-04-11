@@ -48,7 +48,7 @@ export const Navbar = () => {
                   <span>Anime</span>
                 </div>
               </NavigationMenu.Trigger>
-              <NavigationMenu.Content className="absolute top-0 left-0 w-full  data-[motion=from-start]:animate-enterFromLeft data-[motion=from-end]:animate-enterFromRight data-[motion=to-start]:animate-exitToLeft data-[motion=to-end]:animate-exitToRight sm:w-auto">
+              <NavigationMenu.Content className="data-[motion=from-start]:animate-enterFromLeft data-[motion=from-end]:animate-enterFromRight data-[motion=to-start]:animate-exitToLeft data-[motion=to-end]:animate-exitToRight  absolute top-0 left-0 w-full sm:w-auto">
                 <ul className="flex list-none flex-col gap-x-[10px] divide-y divide-gray-200 p-2 sm:w-fit  ">
                   <NavCon title={"Search"} url={"/anime/search"}>
                     <SearchSVG />
@@ -67,6 +67,9 @@ export const Navbar = () => {
                       <RandomSVG />
                     </NavCon>
                   </div>
+                  <NavCon title={"Archive"} url={"/anime/archive"}>
+                    <ArchiveSVG />
+                  </NavCon>
                 </ul>
               </NavigationMenu.Content>
             </NavigationMenu.Item>
@@ -79,7 +82,7 @@ export const Navbar = () => {
                   <span>Manga</span>
                 </div>
               </NavigationMenu.Trigger>
-              <NavigationMenu.Content className="absolute top-0 left-0 w-full data-[motion=from-start]:animate-enterFromLeft data-[motion=from-end]:animate-enterFromRight data-[motion=to-start]:animate-exitToLeft data-[motion=to-end]:animate-exitToRight sm:w-auto">
+              <NavigationMenu.Content className="data-[motion=from-start]:animate-enterFromLeft data-[motion=from-end]:animate-enterFromRight data-[motion=to-start]:animate-exitToLeft data-[motion=to-end]:animate-exitToRight absolute top-0 left-0 w-full sm:w-auto">
                 <ul className="flex list-none flex-col gap-x-[10px] divide-y divide-gray-200 p-2 sm:w-fit ">
                   <NavCon title={"Search"} url={"/manga/search"}>
                     <SearchSVG />
@@ -96,13 +99,13 @@ export const Navbar = () => {
               </NavigationMenu.Content>
             </NavigationMenu.Item>
 
-            <NavigationMenu.Indicator className="top-full z-[1] flex h-[10px] items-end justify-center overflow-hidden transition-[width,transform_250ms_ease] data-[state=visible]:animate-fadeIn data-[state=hidden]:animate-fadeOut">
+            <NavigationMenu.Indicator className="data-[state=visible]:animate-fadeIn data-[state=hidden]:animate-fadeOut top-full z-[1] flex h-[10px] items-end justify-center overflow-hidden transition-[width,transform_250ms_ease]">
               <div className="relative top-[70%] h-[10px] w-[10px] rotate-[45deg] rounded-tl-[2px] bg-accent" />
             </NavigationMenu.Indicator>
           </NavigationMenu.List>
 
           <div className="absolute top-full left-0 flex w-full justify-center perspective-[2000px]">
-            <NavigationMenu.Viewport className="relative mt-[10px] h-[var(--radix-navigation-menu-viewport-height)] w-full origin-[top_center] overflow-hidden rounded-[6px] bg-white transition-[width,_height] duration-300 data-[state=open]:animate-scaleIn data-[state=closed]:animate-scaleOut sm:w-[var(--radix-navigation-menu-viewport-width)]" />
+            <NavigationMenu.Viewport className="data-[state=open]:animate-scaleIn data-[state=closed]:animate-scaleOut relative mt-[10px] h-[var(--radix-navigation-menu-viewport-height)] w-full origin-[top_center] overflow-hidden rounded-[6px] bg-white transition-[width,_height] duration-300 sm:w-[var(--radix-navigation-menu-viewport-width)]" />
           </div>
         </NavigationMenu.Root>
       </div>
@@ -205,6 +208,26 @@ const RandomSVG = () => {
       <polyline points="21 16 21 21 16 21"></polyline>
       <line x1="15" y1="15" x2="21" y2="21"></line>
       <line x1="4" y1="4" x2="9" y2="9"></line>
+    </svg>
+  )
+}
+
+const ArchiveSVG = () => {
+  return (
+    <svg
+      xmlns="http://www.w3.org/2000/svg"
+      width="24"
+      height="24"
+      viewBox="0 0 24 24"
+      fill="none"
+      stroke="currentColor"
+      strokeWidth="2"
+      strokeLinecap="round"
+      strokeLinejoin="round"
+    >
+      <rect width="20" height="5" x="2" y="4" rx="2"></rect>
+      <path d="M4 9v9a2 2 0 0 0 2 2h12a2 2 0 0 0 2-2V9"></path>
+      <path d="M10 13h4"></path>
     </svg>
   )
 }
