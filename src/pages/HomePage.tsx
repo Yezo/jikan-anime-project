@@ -14,15 +14,15 @@ export const HomePage = () => {
         </div>
         <div className="basis-1/2">
           <div className="flex h-full flex-col items-center justify-evenly gap-8 pb-8">
-            <div className="flex flex-col items-center justify-center">
+            <div className="flex flex-col items-center justify-center gap-2">
               <h2 className="text-xl font-bold text-titleTEXT">Welcome to AniFlux</h2>
               <p className="max-w-[40ch] text-center tracking-tight opacity-80">
-                This is a project for all anime lovers to view details of their favorite anime.
-                Users can search for any anime, view all currently airing anime, see the top anime
-                of all time, or be sent to any random anime.
+                This is a project for all anime lovers to view details of their favorite anime or
+                manga. Users can search for any anime or manga, see the top anime of all time, view
+                current or previous seasons of anime, or be sent to any random anime or manga.
               </p>
             </div>
-            <div className="flex max-w-fit flex-col items-center justify-center gap-4 rounded-lg bg-accent py-3 px-8 text-center text-xs font-semibold text-primaryBG opacity-80 shadow-sm ring-1 ring-black/[.15] sm:flex-row">
+            <div className="flex max-w-fit select-none flex-col items-center justify-center gap-4 rounded-lg bg-accent py-3 px-8 text-center text-xs font-semibold text-primaryBG opacity-80 shadow-sm ring-1 ring-black/[.15] sm:flex-row">
               <WarningSVG />
               <p>Some data may not load due to API rate-limiting.</p>
             </div>
