@@ -14,6 +14,8 @@ import { TopManga } from "./pages/Manga/TopManga"
 import { IndividualManga } from "./pages/Manga/IndividualManga"
 import { RandomManga } from "./pages/Manga/RandomManga"
 import { SearchManga } from "./pages/Manga/SearchManga"
+import { SeasonList } from "./pages/Anime/SeasonList"
+import { SeasonAnime } from "./pages/Anime/SeasonAnime"
 
 //Imports - Test
 
@@ -28,6 +30,8 @@ export default function App() {
         <Route path="/anime/currently-airing" element={<CurrentAiringAnime />} />
         <Route path="/anime/random" element={<RandomAnime />} />
         <Route path="/anime/search" element={<SearchAnime />} />
+        <Route path="/anime/archive" element={<SeasonList />} />
+        <Route path="/anime/archive/:year/:season" element={<SeasonAnime />} />
 
         <Route path="/manga/:mangaId" element={<IndividualManga />} />
         <Route path="/manga/top" element={<TopManga />} />
