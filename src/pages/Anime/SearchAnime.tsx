@@ -33,7 +33,7 @@ export const SearchAnime = () => {
       ) : animes && debouncedSearchQuery != "" ? (
         <>
           <div className="mx-auto flex h-full w-full flex-wrap items-center justify-center gap-3 pt-8">
-            {animes && animes
+            {animes
               ? animes.data.map(({ mal_id, images, title, episodes, aired, synopsis, genres }) => (
                   <AnimeCard
                     id={mal_id}

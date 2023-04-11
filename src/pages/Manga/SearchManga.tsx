@@ -30,10 +30,10 @@ export const SearchManga = () => {
         <ErrorMessage />
       ) : isLoading ? (
         <LoadingMessage />
-      ) : mangas ? (
+      ) : mangas && debouncedSearchQuery != "" ? (
         <>
           <div className="mx-auto flex h-full w-full flex-wrap items-center justify-center gap-3 pt-8">
-            {mangas && mangas
+            {mangas
               ? mangas.data.map(
                   ({ mal_id, images, title, rank, popularity, synopsis, genres }, idx) => (
                     <MangaCard
@@ -53,17 +53,17 @@ export const SearchManga = () => {
         </>
       ) : null}
 
-      {mangas && mangas?.pagination.items.count === 0 && (
-        <div className="flex h-80 flex-col items-center justify-center gap-2 text-center text-titleTEXT">
-          <HammerSVG />
-          Sorry, we could not find any manga that matched your search result.
+      {mangas?.pagination.items.count === 0 && debouncedSearchQuery.length > 0 && (
+        <div className="flex flex-col items-center justify-center gap-2 text-sm">
+          <SadFaceSVG />
+          <p>{`A manga matching "${debouncedSearchQuery}" could not be found.`}</p>
         </div>
       )}
     </div>
   )
 }
 
-const HammerSVG = () => {
+const SadFaceSVG = () => {
   return (
     <svg
       xmlns="http://www.w3.org/2000/svg"
@@ -76,9 +76,10 @@ const HammerSVG = () => {
       strokeLinecap="round"
       strokeLinejoin="round"
     >
-      <path d="m15 12-8.5 8.5c-.83.83-2.17.83-3 0 0 0 0 0 0 0a2.12 2.12 0 0 1 0-3L12 9"></path>
-      <path d="M17.64 15 22 10.64"></path>
-      <path d="m20.91 11.7-1.25-1.25c-.6-.6-.93-1.4-.93-2.25v-.86L16.01 4.6a5.56 5.56 0 0 0-3.94-1.64H9l.92.82A6.18 6.18 0 0 1 12 8.4v1.56l2 2h2.47l2.26 1.91"></path>
+      <circle cx="12" cy="12" r="10"></circle>
+      <path d="M16 16s-1.5-2-4-2-4 2-4 2"></path>
+      <line x1="9" x2="9.01" y1="9" y2="9"></line>
+      <line x1="15" x2="15.01" y1="9" y2="9"></line>
     </svg>
   )
 }
