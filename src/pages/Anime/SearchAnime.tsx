@@ -30,12 +30,8 @@ export const SearchAnime = () => {
         <ErrorMessage />
       ) : isLoading ? (
         <LoadingMessage />
-      ) : animes ? (
+      ) : animes && debouncedSearchQuery != "" ? (
         <>
-          <div className="grid place-items-center pt-8">
-            <h2 className="text-2xl font-bold tracking-tighter text-titleTEXT">Currently Airing</h2>
-          </div>
-
           <div className="mx-auto flex h-full w-full flex-wrap items-center justify-center gap-3 pt-8">
             {animes && animes
               ? animes.data.map(({ mal_id, images, title, episodes, aired, synopsis, genres }) => (
@@ -54,6 +50,33 @@ export const SearchAnime = () => {
           </div>
         </>
       ) : null}
+      {animes?.pagination.items.count === 0 && debouncedSearchQuery.length > 0 && (
+        <div className="flex flex-col items-center justify-center gap-2 text-sm">
+          <SadFaceSVG />
+          <p>{`An anime matching "${debouncedSearchQuery}" could not be found.`}</p>
+        </div>
+      )}
     </div>
+  )
+}
+
+const SadFaceSVG = () => {
+  return (
+    <svg
+      xmlns="http://www.w3.org/2000/svg"
+      width="24"
+      height="24"
+      viewBox="0 0 24 24"
+      fill="none"
+      stroke="currentColor"
+      strokeWidth="2"
+      strokeLinecap="round"
+      strokeLinejoin="round"
+    >
+      <circle cx="12" cy="12" r="10"></circle>
+      <path d="M16 16s-1.5-2-4-2-4 2-4 2"></path>
+      <line x1="9" x2="9.01" y1="9" y2="9"></line>
+      <line x1="15" x2="15.01" y1="9" y2="9"></line>
+    </svg>
   )
 }
