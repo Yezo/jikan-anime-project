@@ -1,49 +1,38 @@
 <!-- https://github.com/tpacun/Best-README-Template -->
-<div id="top"></div>
+<!-- IMAGE LINK -->
+<div align="center"> <img src="https://kvo.vercel.app/aniflux.png" data-canonical-src="https://kvo.vercel.app/aniflux.png" height="420" /></div>
 
-<!-- TABLE OF CONTENTS -->
-<details>
-  <summary>Table of Contents</summary>
-  <ol>
-    <li><a href="#anflux">AniFlux</a></li>
-    <li><a href="#built-with">Built With</a></li>
-    <li><a href="#roadmap">Roadmap</a></li>
-    <li><a href="#links">Links</a></li>
-  </ol>
-</details>
+<!-- HEADER INFORMATION -->
+<br />
+<div align="center"><strong>AniFlux</strong></div>
+<div align="center">Reimagining anime platforms.<br />Search for any anime or manga.</div>
+<br />
+<div align="center">
+<a href="https://aniflux.onrender.com/">Website</a> 
+<span><strong> · </strong></span>
+<a href="https://github.com/Yezo/jikan-anime-project">GitHub</a> 
+<span><strong>·</strong></span>
+<a href="https://kvo.vercel.app/">Developer</a>
+</div>
 
+<!-- PROJECT INFORMATION -->
+## Introduction
 
-<!-- ABOUT THE PROJECT -->
-## AniFlux
+AniFlux is my personal take on an anime and manga website, crafted using modern technologies to deliver a visually appealing and modern experience. 
+With a focus on streamlining the content, unnecessary bloat is eliminated, allowing the detailed information of each anime or manga to shine. 
+The intuitive navigation system empowers users to effortlessly navigate between their desired anime or manga. 
 
-Reimagining what it means to be an anime platform paired with a modern design.
-<br>
-Explore in great detail any anime or manga from any time period with AniFlux.
-
-Users will be able to:
-
+## Features
 - View any anime or manga
 - View currently airing anime
 - View the top anime or manga
 - View any random anime or manga
 - Search for any anime or manga
 
-Through this project I have learnt/am learning more about:
-
-- Learned Redux
-- Learned RTK Query
-- Learned how to debounce search queries
-- Learned the importance of typing fetched JSON data
-- Learned pagination practices
-
-<p align="right">(<a href="#top">back to top</a>)</p>
-
-
-
 ## Built With
 
 - React
-- Redux
+- Redux Toolkit
 - RTK Query
 - React Router
 - RadixUI
@@ -53,10 +42,6 @@ Through this project I have learnt/am learning more about:
 - Vite
 - Render
 
-<p align="right">(<a href="#top">back to top</a>)</p>
-
-
-<!-- ROADMAP -->
 ## Roadmap
 
 - [x] View any anime or manga
@@ -67,18 +52,10 @@ Through this project I have learnt/am learning more about:
 - [ ] Filter data by category
 - [ ] Add more categories of anime and manga 
 
-<p align="right">(<a href="#top">back to top</a>)</p>
+## Acknowledgements
 
+- [Jikan API](https://jikan.moe/)
 
-
-<!-- CONTACT -->
-## Links 
-
-Kevin Vo - kvo.codes@gmail.com
-
-Project Repository: [https://github.com/Yezo/jikan-anime-project](https://github.com/Yezo/jikan-anime-project)
-
-<p align="right">(<a href="#top">back to top</a>)</p>
 
 
 
